@@ -1,11 +1,12 @@
 <?php
-namespace SLF\Core;
+namespace App\Core;
 
 use PDO;
 use App\Config;
 use PDOException;
 
 class Model {
+
     protected $dbh;
     protected $statement;
     protected $error;
@@ -58,7 +59,7 @@ class Model {
 
                 case is_null($value):
                     $type = PDO::PARAM_NULL;
-                    break
+                    break;
 
                 default:
                     $type = PDO::PARAM_STR;
@@ -68,8 +69,27 @@ class Model {
         $this->statement->bindValue($param, $value, $type);
     }
 
+    /**
+     * @return mixed
+     */
     public function execute() {
         return $this->statement->execute();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function get_records() {
+        $this->execute();
+        return $this->statement->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function single() {
+        $this->execute();
+        return $this->statement->fetch(PDO::FETCH_ASSOC);
     }
 
 }

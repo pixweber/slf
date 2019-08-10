@@ -1,8 +1,11 @@
 <?php
 namespace App\Models;
 
-class person {
-    private $id;
+use App\Core\Model;
+
+class Person extends Model {
+    
+    private $person_id;
     private $first_name;
     private $last_name;
     private $sex;
@@ -16,24 +19,48 @@ class person {
     private $created_at;
     private $updated_at;
 
-    public function __construct() {
+    public function __construct($person_id) {
 
+        parent::__construct();
+
+        // Do nothing if persion_id is not provided
+        if (!$person_id) return;
+
+        $query = "SELECT * FROM persons WHERE person_id = :person_id";
+
+        $this->query($query);
+        $this->bind(':person_id', $person_id);
+        $result = $this->single();
+
+        if ($result) { // At least one person found
+            $this->person_id = $person_id;
+            $this->first_name = $result['first_name'];
+            $this->last_name = $result['last_name'];
+            $this->sex = $result['sex'];
+            $this->birthdate = $result['birthdate'];
+            $this->address = $result['address'];
+            $this->postcode = $result['postcode'];
+            $this->city = $result['city'];
+            $this->email = $result['email'];
+            $this->phone = $result['phone'];
+            $this->mobile = $result['mobile'];
+            $this->created_at = $result['created_at'];
+            $this->updated_at = $result['updated_at'];
+        }
     }
 
     /**
      * @return mixed
      */
-    public function getId()
-    {
-        return $this->id;
+    public function getPersonId() {
+        return $this->person_id;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $person_id
      */
-    public function setId($id)
-    {
-        $this->id = $id;
+    public function setPersonId($person_id) {
+        $this->person_id = $person_id;
     }
 
     /**
@@ -223,10 +250,7 @@ class person {
     /**
      * @param mixed $updated_at
      */
-    public function setUpdatedAt($updated_at)
-    {
+    public function setUpdatedAt($updated_at) {
         $this->updated_at = $updated_at;
     }
-
-
 }
