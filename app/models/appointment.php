@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
 
-use App\Core\Model;
+use App\Core\Database;
 
-class Appointment extends Model {
+class Appointment extends Database {
     private $appointment_id;
     private $person_id;
     private $hour;

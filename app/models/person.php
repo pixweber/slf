@@ -1,9 +1,9 @@
 <?php
 namespace App\Models;
 
-use App\Core\Model;
+use App\Core\Database;
 
-class Person extends Model {
+class Person extends Database {
     
     private $person_id;
     private $first_name;

@@ -5,7 +5,7 @@ use PDO;
 use App\Config;
 use PDOException;
 
-class Model {
+class Database {
 
     protected $dbh;
     protected $statement;
@@ -92,4 +92,10 @@ class Model {
         return $this->statement->fetch(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * @return mixed
+     */
+    public function get_last_insert_id() {
+        return $this->dbh->lastInsertId();
+    }
 }
