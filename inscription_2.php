@@ -1,13 +1,21 @@
 <?php
-    
-if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
-    header('Location: index.php');  
+if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200) {
+    header('Location: index.php');
+}
+
 
 $isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
 
-$period = $_POST['period'];
-$person = $_POST['person'];
+$period = '';
+$person = '';
 
+if ( isset($_POST['period']) ) {
+    $period = $_POST['period'];
+}
+
+if ( isset($_POST['person']) ) {
+    $person = $_POST['person'];
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -18,11 +26,8 @@ $person = $_POST['person'];
 
         <title>Inscription aux ateliers du Pôle Simon Le Franc</title>
     </head>
-
     <body>
-
-        <script lang="Javascript">
-
+        <script type="text/javascript">
             function CheckInputs() {
                 if (document.forms['form'].fname.value == "" ||
                     document.forms['form'].lname.value == "" ||
@@ -93,29 +98,25 @@ $person = $_POST['person'];
                     </tr>
                 </table>
                 <h1>Vos coordonnées</h1>
+                    <?php
+                    if (isset($_POST['next_step']) || isset($_POST['previous_step']))
+                    {
+                        echo 'Vous souhaitez inscrire un ';
 
-                <!--<p>
-                        <?php 
-                        if (isset($_POST['next_step']) || isset($_POST['previous_step']))
-                        {
-                            echo 'Vous souhaitez inscrire un ';
+                        if ($person == 'child')
+                            echo '<b>enfant</b>';
+                        else
+                            echo '<b>adulte</b>';
 
-                            if ($person == 'child')
-                                echo '<b>enfant</b>';
-                            else
-                                echo '<b>adulte</b>';
+                        echo ' pour ';
 
-                            echo ' pour ';
-
-                            if ($period == 'year')
-                                echo '<b>des activités annuelles.</b>';
-                            else
-                                echo '<b>un stage.</b>';
-                            echo ' Pour modifier ce choix, vous pouvez retourner sur la page précédente en cliquant sur le bouton <i>Précédent</i>.';
-                        }
-                        ?>
-                        
-                    </p>-->
+                        if ($period == 'year')
+                            echo '<b>des activités annuelles.</b>';
+                        else
+                            echo '<b>un stage.</b>';
+                        echo " Pour modifier ce choix, vous pouvez retourner sur la page précédente en cliquant sur le bouton <i>Précédent</i>.";
+                    }
+                    ?>
                 <p style="font-size: 0.8em;">Les champs marqués par une astérique rouge (<label style="color: red;">*</label>) sont nécessaires pour l'inscription.</p>
                 <form name="form" method="post" action="inscription_3.php" onsubmit="return CheckInputs();">
                     <fieldset>
@@ -142,13 +143,11 @@ $person = $_POST['person'];
                                 </td>
                             </tr>
                             <tr>
-                            <!--    
                                 <td colspan="2" style="width: 50%;">
                                     <label class="star_field" for="sex">Sexe :</label>
                                     <input type="radio" name="sex" value="M" checked >M
-                                    <input type="radio" name="sex" value="F">F    
+                                    <input type="radio" name="sex" value="F">F
                                 </td>
-                                
                                 <td colspan="2" style="width: 50%;">
                                     <label class="star_field" for="fname">Date de naissance :</label>
                                     <input type="text" name="birthday" id="birthday" />
@@ -156,8 +155,6 @@ $person = $_POST['person'];
                                         document.getElementById('birthday').value = "<?php if (empty($_POST['birthday'])) echo ''; else echo $_POST['birthday'];?>";
                                     </script>
                                 </td>
-                            -->
-                                
                             </tr>
                         </table>
                     </fieldset>
@@ -165,7 +162,7 @@ $person = $_POST['person'];
                         <legend>Coordonnées</legend>
                         <table class="form" style="width: 100%">
                             
-                            <!--
+
                             <tr>
                                 
                                 <td style="width: 200px;">
@@ -215,7 +212,7 @@ $person = $_POST['person'];
                                     </script>
                                 </td>
                             </tr>
-                            -->
+
                             <tr>
                                 <td style="width: 140px;">
                                     <label for="phone">Téléphone (fixe) :</label>
@@ -264,12 +261,12 @@ $person = $_POST['person'];
                     </fieldset>
                     <fieldset>
                         <legend>Personnes à inscrire</legend>
-                        <input type="checkbox" id="cb1" name="cb1" <?php if($_POST['cb1'] === 'on') echo 'checked="checked"';?>><label for="cb1">Je m’inscris.</label><br/>
-                        <input type="checkbox" id="cb2" name="cb2" <?php if($_POST['cb2'] === 'on') echo 'checked="checked"';?>><label for="cb2">J’inscris les membres de ma famille.</label><br/>
+                        <input type="checkbox" id="cb1" name="cb1" <?php if ( isset($_POST['cb1']) && $_POST['cb1'] === 'on') echo 'checked="checked"';?>><label for="cb1">Je m’inscris.</label><br/>
+                        <input type="checkbox" id="cb2" name="cb2" <?php if( isset( $_POST['cb2']) && $_POST['cb2'] === 'on') echo 'checked="checked"';?>><label for="cb2">J’inscris les membres de ma famille.</label><br/>
                         <!--
                         <input type="checkbox" id="cb3" name="cb3" <?php if($_POST['cb3'] === 'on') echo 'checked="checked"';?>><label for="cb3">J’inscris une autre personne.</label><br/>
                         --> 
-                        <input type="checkbox" id="cb4" name="cb4" <?php if($_POST['cb4'] === 'on') echo 'checked="checked"';?>><label for="cb4">J’inscris les membres d’une autre famille.</label><br/><br/>
+                        <input type="checkbox" id="cb4" name="cb4" <?php if( isset($_POST['cb4']) && $_POST['cb4'] === 'on') echo 'checked="checked"';?>><label for="cb4">J’inscris les membres d’une autre famille.</label><br/><br/>
                         <table class="form" style="width: 100%">
                             <tr>
                                 <td style="width: 190px;">
@@ -283,11 +280,8 @@ $person = $_POST['person'];
                                 </td>
                             <tr/>
                         </table>
-                        
-                        
-                        
-                        
-                        <!-- CHECK FONCTION PHP POUR LIMITER LA SAISI A 5 PERSONNES  --> 
+
+                        <!-- CHECK FONCTION PHP POUR LIMITER LA SAISI A 5 PERSONNES  -->
                         <center><p style="text-decoration: underline;">Attention vous ne pouvez inscrire les membres que d’une seule autre famille et dans la limite de <strong>5 </strong> personnes maximum.</p></center>
                     </fieldset>
                     <br/> <br/> 
@@ -339,8 +333,7 @@ $person = $_POST['person'];
                 <form method="post" action="inscription_1.php">
                     <center><input style="margin-top: 5px;" type="submit" name="previous_step" value="Précédent" /></center>
                     <?php
-                        if (isset($_POST['next_step']))
-                        {
+                        if (isset($_POST['next_step'])) {
                             echo '<input type="hidden" name="period" value="'.htmlentities($period).'">';
                             echo '<input type="hidden" name="person" value="'.htmlentities($person).'">';
                         }

@@ -36,3 +36,19 @@ $appointment = new Appointment(1);
 echo '<pre>';
 var_dump($appointment);
 echo '</pre>';
+
+echo '// Creating an appointment';
+$appointment_data = array(
+    'person_id' => 1,
+    'hour' => '09h30',
+    'participants' => 2,
+    'for_me' => 1,
+    'for_my_family_members' => 1,
+    'for_other_family_members' => 0
+);
+
+$appointment_id = Utils::create_appointment($appointment_data);
+
+echo '<pre>';
+var_dump($appointment_id);
+echo '</pre>';
