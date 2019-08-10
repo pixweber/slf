@@ -1,0 +1,17 @@
+{
+    "name": "slf/slf",
+    "description": "SLF Project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Benjamin DALLARD",
+            "email": "email@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}
