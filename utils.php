@@ -50,18 +50,16 @@ function convert_json_input_value_to_array($string) {
     return json_decode($json);
 }
 
+/**
+ * @return string
+ */
 function get_current_available_hour() {
     $database = new Database();
     $database->query("SELECT `hour`, count(hour) as hours_count FROM appointments
                             GROUP BY `hour`
-                            HAVING hours_count <= 15
-                            ORDER BY hour ASC");
+                            ORDER BY `hour` DESC");
     $database->execute();
     $result = $database->single();
-
-    echo '<pre>';
-    var_dump($result);
-    echo '</pre>';
 
     $output = '09h30';
 
@@ -76,4 +74,39 @@ function get_current_available_hour() {
     }
 
     return $output;
+}
+
+/**
+ * @return int
+ */
+function get_registrations_count() {
+    $database = new Database();
+    $database->query("SELECT count(*) as count FROM appointments");
+    $database->execute();
+    $result = $database->single();
+    if (!$result) return 0;
+    return (int)$result['count'];
+}
+
+/**
+ * @param $url
+ * @param $data
+ */
+function send_post_request($url, $data) {
+    // use key 'http' even if you send the request to https://...
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $result = file_get_contents($url, false, $context);
+    if ($result === FALSE) {
+        echo '<pre>';
+        var_dump('Problems!');
+        echo '</pre>';
+        /* Handle error */
+    }
 }

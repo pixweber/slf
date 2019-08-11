@@ -9,6 +9,10 @@ echo '<pre>';
 var_dump(get_current_available_hour());
 echo '</pre>';
 
+echo '<pre>';
+var_dump(get_registrations_count());
+echo '</pre>';
+
 /*$person = new Person('1');
 
 echo '// Creating a person';

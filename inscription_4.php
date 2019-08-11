@@ -5,35 +5,24 @@ echo '<pre>';
 var_dump($_POST);
 echo '</pre>';
 
-if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
-    header('Location: index.php'); 
+/*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
+    header('Location: index.php');*/
 
 $isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
 
-if (!(file_exists('subs/noms.txt')))
-        file_put_contents('subs/noms.txt', '');
-$names = fopen('subs/noms.txt', 'r');
-$match = $_POST['first_name'] . $_POST['last_name'];
-
-if (strpos(file_get_contents('subs/noms.txt'), $match) !== FALSE) {
+/*if (strpos(file_get_contents('subs/noms.txt'), $match) !== FALSE) {
     $output = 'Cette personne est déjà inscrite aux activités.';
-}
+}*/
 
-fclose($names); 
+// Write person and appointment information to the database
+require 'inc/inscription_4/save-person.php';
+require 'inc/inscription_4/save-appointment.php';
 
 if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
-    $LIFO = fopen('subs/pile.txt', (file_exists('subs/pile.txt')) ? 'a' : 'w');
-    // On commence par déterminer la position de l'utilisateur dans la pile
-    $i = 1;
-    while (file_exists('subs/' . $i . '.txt'))
-        $i++;
-    $target_name = $i . '.txt';
 
+    // On commence par déterminer la position de l'utilisateur dans la pile
     $ext = array('.pdf', '.jpg', '.jpeg');
     $max_size = 2000000;
-
-    fwrite($LIFO, $target_name . PHP_EOL);
-    fclose($LIFO);
 
     if (isset($_FILES['droit_image']) && $_FILES['droit_image']['name'] != '')
     {
@@ -83,37 +72,7 @@ if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
     if (!isset($output)) {
 
         $data = array();
-    
-        $data[0] = $_POST['period'];
-        $data[1] = $_POST['person'];
-        $data[2] = $_POST['first_name'];
-        $data[3] = $_POST['last_name'];
-        $data[4] = $_POST['sex'];
-        $data[5] = $_POST['birthday'];
-        $data[6] = $_POST['address'];
-        $data[7] = $_POST['address_plus'];
-        $data[8] = $_POST['zip'];
-        $data[9] = $_POST['city'];
-        $data[10] = $_POST['phone'];
-        $data[11] = $_POST['mobile'];
-        $data[12] = $_POST['email'];
-        $data[13] = $_POST['registration_options'];
-        $data[16] = $target_autor_file;
-        $data[17] = $target_parent_file;
-        $data[18] = date('d/m/Y H:m:s');
-        $data[19] = GetDateByLIFOIndex(count(file('subs/pile.txt'))); // Heure de passage
-        $data[20] = $_POST['nb_inscrit'];
 
-        $file_data = fopen('subs/' . $target_name, 'w');
-        for ($i = 0; $i < count($data); $i++) {
-            fwrite($file_data, '<' . $i . '>' . $data[$i] . '</' . $i . '>' . PHP_EOL);
-        }
-
-        fclose($file_data);
-
-        $names = fopen('subs/noms.txt', 'a');
-        fwrite($names, $match);
-        fclose($names);
 
         // Après l'ajout de l'utilisateur dans la base, on peut envoyer le mail
         $headers = 'From:PoleSimonLeFranc' . "\r\n";
@@ -126,20 +85,19 @@ if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
             "Attention ce nouveau dispositif ne garantit pas de passer immédiatement. ".
             "Pour garantir le bon fonctionnement nous vous remercions de respecter scrupuleusement cette plage horaire. Si vous êtes en retard l’inscription ne sera plus possible. ".
             "Toute l’équipe vous remercie par avance pour votre compréhension et votre indulgence.\r\n";
-        $content .= "Votre heure de passage est à " . $data[19] . "\r\n\n";
+        $content .= "Votre heure de passage est à " . $appointment_hour . "\r\n\n";
         $content .= "Ceci est un message automatique, veuillez ne pas répondre.\r\n\n";
         $content .= "Pôle Simon le Franc - Mairie de Paris";
 
-        mail($data[12], $object, $content, $headers);
+        mail($_POST['email'], $object, $content, $headers);
+
         /*if (mail($data[12], $object, $content, $headers))
             echo "Message envoyé";
         else
             echo "Erreur !";*/
     }
 
-    // Write person and appointment information to the database
-    require 'inc/inscription_4/save-person.php';
-    require 'inc/inscription_4/save-appointment.php';
+
 
 }
 
@@ -176,7 +134,7 @@ if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
                     }
                     else
                     {
-                        echo '<p>Votre horaire de rendez-vous est : <b>' . $data[19] . '</b>.</p>';
+                        echo '<p>Votre horaire de rendez-vous est : <b>' . $appointment_hour . '</b>.</p>';
                         
                         echo '<p style="text-align: justify;"><b>Vous allez recevoir par mail votre confirmation et votre plage horaire pour vous présenter à l’inscription et limiter votre délai d’attente.</b>
                         <br/><br/>

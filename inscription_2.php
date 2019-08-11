@@ -1,7 +1,7 @@
 <?php
-if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200) {
+/*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200) {
     header('Location: index.php');
-}
+}*/
 
 echo '<pre>';
 var_dump($_POST);
