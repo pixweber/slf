@@ -6,8 +6,8 @@ use App\Core\Database;
 class Utils {
     public static function create_person($person_data) {
         $database = new Database();
-        $query = "INSERT INTO persons(first_name, last_name, sex, birthdate, address, postcode, city, email, phone, mobile, created_at, updated_at) 
-                    VALUES(:first_name,:last_name,:sex,:birthdate,:address,:postcode,:city,:email,:phone,:mobile,:created_at,:updated_at)";
+        $query = "INSERT INTO persons(first_name, last_name, sex, birthdate, address, address_plus, postcode, city, email, phone, mobile, created_at, updated_at) 
+                    VALUES(:first_name,:last_name,:sex,:birthdate,:address,:address_plus,:postcode,:city,:email,:phone,:mobile,:created_at,:updated_at)";
 
         $database->query($query);
 
@@ -16,6 +16,7 @@ class Utils {
         $database->bind(':sex', $person_data['sex']);
         $database->bind(':birthdate', $person_data['birthdate']);
         $database->bind(':address', $person_data['address']);
+        $database->bind(':address_plus', $person_data['address_plus']);
         $database->bind(':postcode', $person_data['postcode']);
         $database->bind(':city', $person_data['city']);
         $database->bind(':email', $person_data['email']);

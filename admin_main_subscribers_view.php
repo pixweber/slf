@@ -122,10 +122,10 @@ while (!(strpos($content, '<' . $j . '>') === FALSE))
                                     <input style="width: 90%;" type="text" name="phone" class="input_readonly" value="<?php echo $subscribers_data[10]; ?>" readonly> 
                                 </td>
                                 <td style="width: 90px;">
-                                    <label for="GSM">Portable :</label>
+                                    <label for="mobile">Portable :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 100%;" type="text" name="GSM" class="input_readonly" value="<?php echo $subscribers_data[11]; ?>" readonly>
+                                    <input style="width: 100%;" type="text" name="mobile" class="input_readonly" value="<?php echo $subscribers_data[11]; ?>" readonly>
                                 </td>
                             </tr>
                             <tr>

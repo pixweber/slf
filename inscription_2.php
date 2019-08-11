@@ -3,6 +3,17 @@ if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200) {
     header('Location: index.php');
 }
 
+echo '<pre>';
+var_dump($_POST);
+echo '</pre>';
+
+$registration_options = null;
+$registration_options_json = '';
+
+if (isset($_POST['registration_options'])) {
+    $registration_options_json = str_replace('\'', '"', $_POST['registration_options']);
+    $registration_options = json_decode($registration_options_json, true);
+}
 
 $isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
 
@@ -17,73 +28,13 @@ if ( isset($_POST['person']) ) {
     $person = $_POST['person'];
 }
 ?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
     <head>
-        
         <?php include("html/meta.html"); ?>
-
         <title>Inscription aux ateliers du Pôle Simon Le Franc</title>
     </head>
     <body>
-        <script type="text/javascript">
-            function CheckInputs() {
-                if (document.forms['form'].fname.value == "" ||
-                    document.forms['form'].lname.value == "" ||
-                    //document.forms['form'].birthday.value == "" ||
-                    document.forms['form'].address.value == "" ||
-                    document.forms['form'].zip.value == "" ||
-                    document.forms['form'].city.value == "" ||
-                    document.forms['form'].GSM.value == "" ||
-                    document.forms['form'].mail.value == "" ||
-                    document.forms['form'].nb_inscrit.value == "") {
-                    alert("Certains champs obligatoires n'ont pas été remplis.");
-                    return false;
-                }
-                else if (!document.forms["form"].birthday.value.match(/^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/g)) {
-                    alert("La saisie de la date de naissance est invalide. Veuillez inscrire la date de naissance au format suivant : JJ/MM/AAAA");
-                    return false;
-                }
-                else if (!document.forms["form"].mail.value.match(/^(?:[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+\.)*[\w\!\#\$\%\&\'\*\+\-\/\=\?\^\`\{\|\}\~]+@(?:(?:(?:[a-zA-Z0-9_](?:[a-zA-Z0-9_\-](?!\.)){0,61}[a-zA-Z0-9_-]?\.)+[a-zA-Z0-9_](?:[a-zA-Z0-9_\-](?!$)){0,61}[a-zA-Z0-9_]?)|(?:\[(?:(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\.){3}(?:[01]?\d{1,2}|2[0-4]\d|25[0-5])\]))$/)) {
-                    alert("Le format de l'adresse mail est incorrecte.");
-                    return false;
-                }
-                else if (document.forms["form"].GSM.value.length != 10) {
-                    alert("Le numéro de téléphone portable nécessite 10 chiffres.");
-                    return false;
-                }
-                else if (document.forms["form"].phone.value.length > 0 && document.forms["form"].phone.value.length != 10) {
-                    alert("Le numéro de téléphone fixe nécessite 10 chiffres.");
-                    return false;
-                }
-                else if (document.forms['form'].revenu_fiscal.value.length != "") {
-                    if (parseFloat(document.forms['form'].revenu_fiscal.value) < 0) {
-                        alert("Le revenu fiscal de référence ne peut pas être inférieur à 0 euros.");
-                        return false;
-                    }
-                }
-                else if (!document.getElementById('cb1').checked && !document.getElementById('cb2').checked &&
-                        !document.getElementById('cb3').checked && !document.getElementById('cb4').checked) {
-                    alert("Au moins une personne doit être inscrite.");
-                    return false;
-                }
-                else if (document.forms['form'].nb_inscrit.value != "") {
-                    var val = parseFloat(document.forms['form'].nb_inscrit.value);
-                    if (val != Math.round(val)) {
-                        alert("Le nombre de personnes inscrites doit être un nombre entier.");
-                        return false;
-                    }
-                    else if (val <= 0) {
-                        alert("Il ne peut y avoir moins d'une personne inscrite.");
-                        return false;
-                    }
-                }
-                return true;
-            }
-
-
-        </script>
 
         <?php include("html/header.php"); ?>
 
@@ -118,7 +69,7 @@ if ( isset($_POST['person']) ) {
                     }
                     ?>
                 <p style="font-size: 0.8em;">Les champs marqués par une astérique rouge (<label style="color: red;">*</label>) sont nécessaires pour l'inscription.</p>
-                <form name="form" method="post" action="inscription_3.php" onsubmit="return CheckInputs();">
+                <form id="registration-form-2" name="form" method="post" action="inscription_3.php">
                     <fieldset>
                         <legend>Identité</legend>
                         <table class="form" style="width: 100%">
@@ -127,33 +78,25 @@ if ( isset($_POST['person']) ) {
                                     <label class="star_field" for="lname">Nom :</label>
                                 </td>
                                 <td style="width: 40%;">
-                                    <input style="float: right; width: 100%;margin-right: 10px;" type="text" name="lname" id="lname">
-                                    <script type="text/javascript">
-                                        document.getElementById('lname').value = "<?php if (empty($_POST['lname'])) echo ''; else echo $_POST['lname'];?>";
-                                    </script>
+                                    <input style="float: right; width: 100%;margin-right: 10px;" type="text" name="last_name" id="last_name"
+                                           required value="<?php echo isset($_POST['last_name']) ? $_POST['last_name'] : ''; ?>">
                                 </td>
                                 <td style="width: 13%;">
                                     <label class="star_field" for="fname">Prénom :</label>
                                 </td>
                                 <td style="width: 37%;">
-                                    <input style="float: right; width: 100%;" type="text" name="fname" id="fname">
-                                    <script type="text/javascript">
-                                        document.getElementById('fname').value = "<?php if (empty($_POST['fname'])) echo ''; else echo $_POST['fname'];?>";
-                                    </script>
+                                    <input style="float: right; width: 100%;" type="text" name="first_name" id="first_name" required value="<?php echo isset($_POST['first_name']) ? $_POST['first_name'] : ''; ?>" />
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="width: 50%;">
                                     <label class="star_field" for="sex">Sexe :</label>
-                                    <input type="radio" name="sex" value="M" checked >M
+                                    <input type="radio" name="sex" value="M" checked required>M
                                     <input type="radio" name="sex" value="F">F
                                 </td>
                                 <td colspan="2" style="width: 50%;">
                                     <label class="star_field" for="fname">Date de naissance :</label>
-                                    <input type="text" name="birthday" id="birthday" />
-                                    <script type="text/javascript">
-                                        document.getElementById('birthday').value = "<?php if (empty($_POST['birthday'])) echo ''; else echo $_POST['birthday'];?>";
-                                    </script>
+                                    <input type="text" name="birthday" id="birthday" required value="<?php echo isset($_POST['birthday']) ? $_POST['birthday'] : ''; ?>"/>
                                 </td>
                             </tr>
                         </table>
@@ -170,10 +113,7 @@ if ( isset($_POST['person']) ) {
                                 </td>
                                 
                                 <td>
-                                    <input style="width: 100%;" type="text" name="address" id="address"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('address').value = "<?php if (empty($_POST['address'])) echo ''; else echo $_POST['address'];?>";
-                                    </script>
+                                    <input style="width: 100%;" type="text" name="address" id="address" required value="<?php echo isset($_POST['address']) ? $_POST['address'] : ''; ?>" />
                                 </td>
                                 
                             </tr>
@@ -183,10 +123,7 @@ if ( isset($_POST['person']) ) {
                                 </td>
                                 
                                 <td>
-                                    <input style="width: 100%;" type="text" name="address_plus" id="address_plus"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('address_plus').value = "<?php if (empty($_POST['address_plus'])) echo ''; else echo $_POST['address_plus'];?>";
-                                    </script>
+                                    <input style="width: 100%;" type="text" name="address_plus" id="address_plus" value="<?php echo isset($_POST['address_plus']) ? $_POST['address_plus'] : ''; ?>" />
                                 </td>
                             </tr>
                         </table>
@@ -197,19 +134,13 @@ if ( isset($_POST['person']) ) {
                                     <label class="star_field" for="zip">Code Postal :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 90%;" type="text" name="zip" id="zip"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('zip').value = "<?php if (empty($_POST['zip'])) echo ''; else echo $_POST['zip'];?>";
-                                    </script>
+                                    <input style="width: 90%;" type="text" name="zip" id="zip" required value="<?php echo isset($_POST['zip']) ? $_POST['zip'] : ''; ?>" minlength="5" maxlength="5">
                                 </td>
                                 <td style="width: 90px;">
                                     <label class="star_field" for="city">Ville :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 100%;" type="text" name="city" id="city"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('city').value = "<?php if (empty($_POST['city'])) echo ''; else echo $_POST['city'];?>";
-                                    </script>
+                                    <input style="width: 100%;" type="text" name="city" id="city" required value="<?php echo isset($_POST['city']) ? $_POST['city'] : ''; ?>">
                                 </td>
                             </tr>
 
@@ -218,42 +149,30 @@ if ( isset($_POST['person']) ) {
                                     <label for="phone">Téléphone (fixe) :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 90%;" type="text" name="phone" id="phone"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('phone').value = "<?php if (empty($_POST['phone'])) echo ''; else echo $_POST['phone'];?>";
-                                    </script>
+                                    <input style="width: 90%;" type="text" name="phone" id="phone" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : ''; ?>">
                                 </td>
                                 <td style="width: 90px;">
-                                    <label class="star_field" for="GSM">Portable :</label>
+                                    <label class="star_field" for="mobile">Portable :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 100%;" type="text" name="GSM" id="GSM"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('GSM').value = "<?php if (empty($_POST['GSM'])) echo ''; else echo $_POST['GSM'];?>";
-                                    </script>
+                                    <input style="width: 100%;" type="text" name="mobile" id="mobile" required value="<?php echo isset($_POST['mobile']) ? $_POST['mobile'] : ''; ?>">
                                 </td>
                             </tr>
                             <tr>
                                 <td style="width: 140px;">
-                                    <label class="star_field" for="mail">Adresse mail :</label>
+                                    <label class="star_field" for="email">Adresse mail :</label>
                                 </td>
                                 <td colspan="3">
-                                    <input style="width: 100%;" type="text" name="mail" id="mail"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('mail').value = "<?php if (empty($_POST['mail'])) echo ''; else echo $_POST['mail'];?>";
-                                    </script>
+                                    <input style="width: 100%;" type="email" name="email" id="email" required value="<?php echo isset($_POST['email']) ? $_POST['email'] : ''; ?>">
                                 </td>
                             </tr>
                             
                             <tr>
                                 <td style="width: 140px;">
-                                    <label class="star_field" for="mail">Confirmation :</label>
+                                    <label class="star_field" for="confirm_email">Confirmation :</label>
                                 </td>
                                 <td colspan="3">
-                                    <input style="width: 100%;" type="text" name="mail" id="mail"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('mail').value = "<?php if (empty($_POST['mail'])) echo ''; else echo $_POST['mail'];?>";
-                                    </script>
+                                    <input style="width: 100%;" type="email" name="confirm_email" id="confirm_email" required value="<?php echo isset($_POST['confirm_email']) ? $_POST['confirm_email'] : ''; ?>">
                                 </td>
                             </tr>
                             
@@ -261,22 +180,32 @@ if ( isset($_POST['person']) ) {
                     </fieldset>
                     <fieldset>
                         <legend>Personnes à inscrire</legend>
-                        <input type="checkbox" id="cb1" name="cb1" <?php if ( isset($_POST['cb1']) && $_POST['cb1'] === 'on') echo 'checked="checked"';?>><label for="cb1">Je m’inscris.</label><br/>
-                        <input type="checkbox" id="cb2" name="cb2" <?php if( isset( $_POST['cb2']) && $_POST['cb2'] === 'on') echo 'checked="checked"';?>><label for="cb2">J’inscris les membres de ma famille.</label><br/>
-                        <!--
-                        <input type="checkbox" id="cb3" name="cb3" <?php if($_POST['cb3'] === 'on') echo 'checked="checked"';?>><label for="cb3">J’inscris une autre personne.</label><br/>
-                        --> 
-                        <input type="checkbox" id="cb4" name="cb4" <?php if( isset($_POST['cb4']) && $_POST['cb4'] === 'on') echo 'checked="checked"';?>><label for="cb4">J’inscris les membres d’une autre famille.</label><br/><br/>
+                        <div style="position: relative; margin-bottom: 10px;">
+                            <input type="checkbox" id="for_me" name="registration_options[]" value="for_me">
+                            <label for="for_me">Je m’inscris.</label><br />
+
+                            <input type="checkbox" id="for_my_family_members" name="registration_options[]" value="for_my_family_members">
+                            <label for="for_my_family_members">J’inscris les membres de ma famille.</label><br/>
+
+                            <input type="checkbox" id="for_other_family_members" name="registration_options[]" value="for_other_family_members">
+                            <label for="for_other_family_members">J’inscris les membres d’une autre famille.</label><br/><br/>
+                            <script type="text/javascript">
+                                var checked_values = <?php echo $registration_options_json; ?>;
+                                checked_values.forEach(function(value, key){
+                                    console.log(value);
+                                    $('input:checkbox[value="'+ value +'"]').prop('checked', true);
+                                });
+                            </script>
+                        </div>
+
                         <table class="form" style="width: 100%">
                             <tr>
                                 <td style="width: 190px;">
                                     <label class="star_field" for="nb_inscrit">Nombre d'inscriptions :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 20%;" type="text" name="nb_inscrit" id="nb_inscrit" value="<?php if (empty($_POST['nb_inscrit'])) echo ''; else echo $_POST['nb_inscrit'];?>"> 
-                                    <script type="text/javascript">
-                                        document.getElementById('nb_inscrit').value = "<?php if (empty($_POST['nb_inscrit'])) echo ''; else echo $_POST['nb_inscrit'];?>";
-                                    </script>
+                                    <input style="width: 20%;" type="text" name="nb_inscrit" id="nb_inscrit"
+                                           value="<?php echo isset($_POST['nb_inscrit']) ? $_POST['nb_inscrit'] : ''; ?>" required min="1" max="5">
                                 </td>
                             <tr/>
                         </table>
@@ -284,44 +213,7 @@ if ( isset($_POST['person']) ) {
                         <!-- CHECK FONCTION PHP POUR LIMITER LA SAISI A 5 PERSONNES  -->
                         <center><p style="text-decoration: underline;">Attention vous ne pouvez inscrire les membres que d’une seule autre famille et dans la limite de <strong>5 </strong> personnes maximum.</p></center>
                     </fieldset>
-                    <br/> <br/> 
-                    
-                    <!--
-                    <fieldset>
-                        <legend>Quotient Familial (Facultatif)</legend>
-                            <table class="form" style="width: 100%">
-                                <tr>
-                                    <td style="width: 30%">
-                                        <label for="revenu_fiscal">Revenu fiscal de référence :</label>
-                                    </td>
-                                    <td style="width: 20%">
-                                        <input style="width: 70%;" type="text" name="revenu_fiscal" id="revenu_fiscal"> €
-                                        <script type="text/javascript">
-                                            document.getElementById('revenu_fiscal').value = "<?php if (empty($_POST['revenu_fiscal'])) echo ''; else echo $_POST['revenu_fiscal'];?>";
-                                        </script>
-                                    </td>
-                                    <td style="width: 30%">
-                                        <label for="part_fiscal">Parts fiscales :</label>
-                                    </td>
-                                    <td style="width: 20%">
-                                        <select name="part_fiscal" id="part_fiscal" style="width: 100%;">
-                                            <option value="1" <?php if($_POST['part_fiscal'] == 1) echo 'selected' ?>>1</option>
-                                            <option value="2" <?php if($_POST['part_fiscal'] == 2) echo 'selected' ?>>1,5</option>
-                                            <option value="3" <?php if($_POST['part_fiscal'] == 3) echo 'selected' ?>>2</option>
-                                            <option value="4" <?php if($_POST['part_fiscal'] == 4) echo 'selected' ?>>2,5</option>
-                                            <option value="5" <?php if($_POST['part_fiscal'] == 5) echo 'selected' ?>>3</option>
-                                            <option value="6" <?php if($_POST['part_fiscal'] == 6) echo 'selected' ?>>3,5</option>
-                                            <option value="7" <?php if($_POST['part_fiscal'] == 7) echo 'selected' ?>>4</option>
-                                            <option value="8" <?php if($_POST['part_fiscal'] == 8) echo 'selected' ?>>4,5</option>
-                                            <option value="9" <?php if($_POST['part_fiscal'] == 9) echo 'selected' ?>>5</option>
-                                            <option value="10" <?php if($_POST['part_fiscal'] == 10) echo 'selected' ?>>5,5</option>
-                                            <option value="11" <?php if($_POST['part_fiscal'] == 11) echo 'selected' ?>>6</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                    </fieldset>
-                    -->
+                    <br/> <br/>
                     
                     <?php
                         echo '<input type="hidden" name="period" value="'.htmlentities($period).'">';

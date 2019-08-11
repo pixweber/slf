@@ -70,80 +70,70 @@ class Appointment extends Database {
     /**
      * @return mixed
      */
-    public function getHour()
-    {
+    public function getHour() {
         return $this->hour;
     }
 
     /**
      * @param mixed $hour
      */
-    public function setHour($hour)
-    {
+    public function setHour($hour) {
         $this->hour = $hour;
     }
 
     /**
      * @return mixed
      */
-    public function getParticipants()
-    {
+    public function getParticipants() {
         return $this->participants;
     }
 
     /**
      * @param mixed $participants
      */
-    public function setParticipants($participants)
-    {
+    public function setParticipants($participants) {
         $this->participants = $participants;
     }
 
     /**
      * @return mixed
      */
-    public function getForMe()
-    {
+    public function getForMe() {
         return $this->for_me;
     }
 
     /**
      * @param mixed $for_me
      */
-    public function setForMe($for_me)
-    {
+    public function setForMe($for_me) {
         $this->for_me = $for_me;
     }
 
     /**
      * @return mixed
      */
-    public function getForMyFamilyMembers()
-    {
+    public function getForMyFamilyMembers() {
         return $this->for_my_family_members;
     }
 
     /**
      * @param mixed $for_my_family_members
      */
-    public function setForMyFamilyMembers($for_my_family_members)
-    {
+    public function setForMyFamilyMembers($for_my_family_members) {
         $this->for_my_family_members = $for_my_family_members;
     }
 
     /**
      * @return mixed
      */
-    public function getForOtherFamilyMembers()
-    {
+    public function getForOtherFamilyMembers() {
         return $this->for_other_family_members;
     }
 
     /**
      * @param mixed $for_other_family_members
      */
-    public function setForOtherFamilyMembers($for_other_family_members)
-    {
+    public function setForOtherFamilyMembers($for_other_family_members) {
         $this->for_other_family_members = $for_other_family_members;
     }
 

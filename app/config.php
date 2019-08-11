@@ -8,5 +8,11 @@ class Config {
     const DB_PASSWORD = '';
     const DB_TYPE = 'mysqli';
     const DB_PORT = '3306';
-
+    const HOURS = array(
+        '09h30', '10h00', '10h30', '11h00',
+        '11h20', '11h45', '12h10', '12h40',
+        '13h00', '14h00', '14h30', '14h45',
+        '15h00', '15h15', '15h40', '16h00',
+        '16h25', '16h45', '17h00'
+    );
 }

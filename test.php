@@ -5,7 +5,11 @@ use App\Models\Person;
 use App\Models\Appointment;
 use App\Utils;
 
-$person = new Person('1');
+echo '<pre>';
+var_dump(get_current_available_hour());
+echo '</pre>';
+
+/*$person = new Person('1');
 
 echo '// Creating a person';
 
@@ -21,7 +25,7 @@ $person_data = array(
     'phone' => '0767973163',
     'mobile' => '0767973163',
     'created_at' => date('Y-m-d H:i:s'),
-    'updated_at' => date('Y-m-d H:i:s'),
+    'updated_at' => date('Y-m-d H:i:s')
 );
 
 $person_id = Utils::create_person($person_data);
@@ -51,4 +55,4 @@ $appointment_id = Utils::create_appointment($appointment_data);
 
 echo '<pre>';
 var_dump($appointment_id);
-echo '</pre>';
+echo '</pre>';*/

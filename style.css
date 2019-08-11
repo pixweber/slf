@@ -1,0 +1,89 @@
+.no-padding {
+    padding: 0!important
+}
+.no-padding>pre {
+    margin: 30px
+}
+.no-padding .dataTables_wrapper table,
+.no-padding>table {
+    border: none!important;
+    margin-bottom: 0!important;
+    border-bottom-width: 0!important
+}
+.no-padding-bottom {
+    padding-bottom: 0!important
+}
+.padding-5 {
+    padding: 5px!important
+}
+.padding-7 {
+    padding: 7px!important
+}
+.padding-10 {
+    padding: 10px!important
+}
+.padding-gutter {
+    padding: 13px!important
+}
+.padding-top-10 {
+    padding-top: 10px!important
+}
+.padding-top-15 {
+    padding-top: 15px!important
+}
+.padding-bottom-10 {
+    padding-bottom: 10px!important
+}
+.padding-bottom-0 {
+    padding-bottom: 0!important
+}
+.padding-top-0 {
+    padding-top: 0!important
+}
+
+.margin-top-0 {
+    margin-top: 0 !important;
+}
+
+.margin-top-5 {
+    margin-top: 5px !important;
+}
+
+.margin-top-10 {
+    margin-top: 10px !important;
+}
+
+.margin-bottom-0 {
+    margin-bottom: 0 !important;
+}
+
+form label.error {
+    font-size: 0.8rem;
+    color: red;
+    font-weight: bold;
+    display: block;
+}
+
+form legend {
+    font-weight: bold;
+}
+
+input.error {
+    border: 1px solid red;
+    background-color: #dddddd;
+}
+
+input.valid {
+    border: 2px solid green;
+    background-color: rgba(0, 128, 0, 0.37);
+}
+
+[for="registration_options[]"] {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+}
+
+#registration-options-readonly {
+    background-color: #EBEBEB;
+}
