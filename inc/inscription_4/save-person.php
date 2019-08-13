@@ -4,7 +4,7 @@ use App\Utils;
 // Save person data to the database
 $person_data = array(
     'first_name' => $_POST['first_name'],
-    'last_name' => $_POST['first_name'],
+    'last_name' => $_POST['last_name'],
     'sex' => $_POST['sex'] === 'M' ? '1' : '0',
     'birthdate' => DateTime::createFromFormat('d/m/Y',$_POST['birthday'])->format('Y-m-d'),
     'address' => $_POST['address'],

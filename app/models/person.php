@@ -10,7 +10,9 @@ class Person extends Database {
     private $last_name;
     private $sex;
     private $birthdate;
+    private $birthdate_fr;
     private $address;
+    private $address_plus;
     private $postcode;
     private $city;
     private $email;
@@ -38,7 +40,9 @@ class Person extends Database {
             $this->last_name = $result['last_name'];
             $this->sex = $result['sex'];
             $this->birthdate = $result['birthdate'];
+            $this->birthdate_fr = \DateTime::createFromFormat('Y-m-d', $this->birthdate)->format('d-m-Y');
             $this->address = $result['address'];
+            $this->address_plus = $result['address_plus'];
             $this->postcode = $result['postcode'];
             $this->city = $result['city'];
             $this->email = $result['email'];
@@ -130,6 +134,21 @@ class Person extends Database {
     /**
      * @return mixed
      */
+    public function getBirthdateFr() {
+        return $this->birthdate_fr;
+    }
+
+    /**
+     * @param mixed $birthdate_fr
+     */
+    public function setBirthdateFr($birthdate_fr) {
+        $this->birthdate_fr = $birthdate_fr;
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function getAddress()
     {
         return $this->address;
@@ -141,6 +160,20 @@ class Person extends Database {
     public function setAddress($address)
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddressPlus() {
+        return $this->address_plus;
+    }
+
+    /**
+     * @param mixed $address_plus
+     */
+    public function setAddressPlus($address_plus) {
+        $this->address_plus = $address_plus;
     }
 
     /**

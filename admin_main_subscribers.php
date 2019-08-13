@@ -1,91 +1,15 @@
 <?php
+header('Content-Type: text/html; charset=utf-8');
+
+require 'init.php';
+
+use App\Utils;
+
 session_start();
 
-if (!isset($_SESSION['password']))
+if (!isset($_SESSION['password'])) {
     header('location: admin.php');
-
-$subscribers_files = array();
-$temp_data = array();
-$subscribers_data = array();
-
-$inc = 0;
-if (file_exists('subs/pile.txt'))
-{
-    $pile = fopen('subs/pile.txt', 'r');
-    while (!feof($pile))
-    {
-        $path = fgets($pile);
-        $path = rtrim($path, "\r\n"); // Attention car fgets prends en compte \r\n, ce qui ne donne pas le bon chemin
-        if ($path != '')
-        {
-            $subscribers_files[$inc] = 'subs/' . $path;
-            $inc++;
-        }
-    }
-    fclose($pile);
-
-    $sort_items = array();
-    $prev_sort_items = array();
-
-    for ($i = 0; $i < count($subscribers_files); $i++)
-    {
-        if (file_exists($subscribers_files[$i]))
-        {
-            $file = fopen($subscribers_files[$i], 'r');
-            $content = fread($file, filesize($subscribers_files[$i]));
-            fclose($file);
-            $j = 0;
-            while (!(strpos($content, '<' . $j . '>') === FALSE))
-            {
-                $start = strpos($content, '<' . $j . '>') + strlen('<' . $j . '>');
-                $length = strpos($content, '</' . $j . '>') - $start;
-                $line = substr($content, $start, $length);
-                $temp_data[$i][$j] = $line;
-                $j++;
-            }
-
-            if ($_GET['sort'] == 0) // Par défaut
-            {
-                $prev_sort_items[$i] = $i;
-                $sort_items[$i] = $i;
-            }
-            else if ($_GET['sort'] == 1) // Par nom
-            {
-                $prev_sort_items[$i] = $temp_data[$i][3];
-                $sort_items[$i] = $temp_data[$i][3];
-            }
-            else if ($_GET['sort'] == 2) // Par prénom
-            {
-                $prev_sort_items[$i] = $temp_data[$i][2];
-                $sort_items[$i] = $temp_data[$i][2];
-            }
-            else if ($_GET['sort'] == 3) // Par date de naissance
-            {
-                $prev_sort_items[$i] = $temp_data[$i][5];
-                $sort_items[$i] = $temp_data[$i][5];
-            }
-            else if ($_GET['sort'] == 4) // Par heure de passage
-            {
-                $prev_sort_items[$i] = $temp_data[$i][19];
-                $sort_items[$i] = $temp_data[$i][19];
-            }
-        }
-    }
-
-    if ($_GET['ascending'])
-        rsort($sort_items);
-    else
-        sort($sort_items);
-
-    for ($p = 0; $p < count($sort_items); $p++)
-    {
-        $index = array_search($sort_items[$p], $prev_sort_items);
-        $subscribers_data[$p] = $temp_data[$index];
-        unset($prev_sort_items[$index]);
-    
-    }
 }
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -116,23 +40,39 @@ if (file_exists('subs/pile.txt'))
                 <form method="get" action="admin_main_subscribers.php">
                     <center>
                         <label for="sort">Trier par </label>
-                        <select name="sort" id="sort" style="width: 160px;">
-                            <option value="0" <?php if($_GET['sort'] == 0) echo 'selected' ?>>Défaut</option>
-                            <option value="1" <?php if($_GET['sort'] == 1) echo 'selected' ?>>Nom</option>
-                            <option value="2" <?php if($_GET['sort'] == 2) echo 'selected' ?>>Prénom</option>
-                            <option value="3" <?php if($_GET['sort'] == 3) echo 'selected' ?>>Date de naissance</option>
-                            <option value="4" <?php if($_GET['sort'] == 4) echo 'selected' ?>>Heure de passage</option>
-                        </select>
+                            <select id="sort_by" name="sort" id="sort" style="width: 160px;">
+                                <option value="">Défaut</option>
+                                <option value="last_name">Nom</option>
+                                <option value="first_name">Prénom</option>
+                                <option value="birthdate">Date de naissance</option>
+                                <option value="hour">Heure de passage</option>
+                            </select>
                         <label for="ascending"> et par ordre </label>
                         <select name="ascending" id="ascending" style="width: 120px;">
-                            <option value="0" <?php if($_GET['ascending'] == 0) echo 'selected' ?>>Croissant</option>
-                            <option value="1" <?php if($_GET['ascending'] == 1) echo 'selected' ?>>Décroissant</option>
+                            <option value="asc">Croissant</option>
+                            <option value="desc">Décroissant</option>
                         </select>
                         <input type="submit" name="sort_list" value="Trier" />
                     </center>
                 </form>
+                <script type="text/javascript">
+                    $(document).ready(function(){
+                        /**
+                         * Set selected for sort by select and sort order
+                         */
+                        var sort_by = getParameterByName('sort', window.location.url);
+                        var order = getParameterByName('ascending', window.location.url);
+
+                        console.log(sort_by, order);
+
+                        $('select#sort_by option[value="'+sort+'"]').attr("selected","selected");
+                        /**
+                         * End Set selected for sort by select and sort order
+                         */
+                    });
+                </script>
                 <br/>
-                <table style="width: 100%;border-collapse: collapse;">
+                <table id="appointments-table" style="width: 100%;border-collapse: collapse;">
                     <tr style="background: #FF9C0F;color: white;font-size: 1.1em;">
                         <th>Nom</th>
                         <th>Prénom</th>
@@ -141,21 +81,46 @@ if (file_exists('subs/pile.txt'))
                         <th style="width: 160px;">Actions</th>
                     </tr>
                     <?php
-                        for ($k = 0; $k < count($subscribers_files); $k++)
-                        {
-                            $color = ($k % 2 == 0) ? '#FFE9CA' : '#FFF4E6';
-                            echo '
-                                <tr style="background: ' . $color . ';">
-                                    <td style="text-align: center;">' . utf8_encode($subscribers_data[$k][3]) . '</td>
-                                    <td style="text-align: center;">' . utf8_encode($subscribers_data[$k][2]) . '</td>
-                                    <td style="text-align: center;">' . $subscribers_data[$k][5] . '</td>
-                                    <td style="text-align: center;">' . $subscribers_data[$k][19] . '</td>
-                                    <td style="text-align: center;"><a href="admin_main_subscribers_view.php?file=' . str_replace('subs/', '', $subscribers_files[$k]) . '">Détails</a> - <a href="admin_main_subscribers_delete.php?file=' . str_replace('subs/', '', $subscribers_files[$k]) .'&id=' . utf8_encode($subscribers_data[$k][2]) . utf8_encode($subscribers_data[$k][3]) . '&doc1=' . str_replace('subs/', '', $subscribers_data[$k][16]) .'&doc2="' . str_replace('subs/', '', $subscribers_data[$k][17]) . '>Supprimer</a></td>
-                                </tr>';
+                        $appointments = null;
+                        if (!isset($_GET['sort']) && !isset($_GET['ascending'])) {
+                            $appointments = Utils::get_all_appointments();
+                        }  else {
+                            $appointments = Utils::get_all_appointments($_GET['sort'], $_GET['ascending']);
                         }
-                    ?>        
+
+                        if ($appointments) :
+                            foreach ($appointments as $appointment) :
+                            ?>
+                                <tr>
+                                    <td style="text-align: center;"><?php echo strtoupper($appointment['last_name']); ?></td>
+                                    <td style="text-align: center;"><?php echo $appointment['first_name']; ?></td>
+                                    <td style="text-align: center;"><?php echo DateTime::createFromFormat('Y-m-d', $appointment['birthdate'])->format('d/m/Y'); ?></td>
+                                    <td style="text-align: center;"><?php echo $appointment['hour']; ?></td>
+                                    <td style="text-align: center;">
+                                        <a href="admin_main_subscribers_view.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Détails</a> -
+                                        <a href="admin_main_subscribers_delete.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Supprimer</a>
+                                    </td>
+                                </tr>
+                            <?php
+                            endforeach;
+                        else :
+                        ?>
+                            <div>Actuellement il n'y a pas de pré-inscription</div>
+                        <?php
+                        endif;
+                        ?>
+
                 </table>
-                <p style="text-align: center;"><a href="admin_main_subscribers_delete_all.php"><img src="resources/db_remove.png" style="width: 24px;margin: 0px 8px -7px 0;" />Supprimer tous les inscrits</a></p>
+                <table style="width: 100%;">
+                    <tbody><tr>
+                        <td width="50%">
+                            <p style="text-align: center;"><a href="#" onclick="sure();"><img src="/resources/db_remove.png" style="width: 24px;margin: 0px 8px -7px 0;">Supprimer tous les inscrits</a></p>
+                        </td>
+                        <td width="50%">
+                            <p style="text-align: center;"><a href="generate_excel.php" _target="_blank"><img src="/assets/img/icon_excel.jpg" style="width: 24px;margin: 0px 8px -7px 0;">Télécharger le fichier Excel</a></p>
+                        </td>
+                    </tr>
+                    </tbody></table>
             </div>
 
             <?php include("html/footer.html"); ?>

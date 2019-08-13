@@ -87,3 +87,11 @@ input.valid {
 #registration-options-readonly {
     background-color: #EBEBEB;
 }
+
+#appointments-table tbody tr:nth-child(odd) {
+    background-color: #FFE9CA;
+}
+
+#appointments-table tbody tr:nth-child(even) {
+    background-color: #FFF4E6;
+}

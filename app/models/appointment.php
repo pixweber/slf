@@ -137,5 +137,47 @@ class Appointment extends Database {
         $this->for_other_family_members = $for_other_family_members;
     }
 
+    /**
+     * @return array
+     */
+    public function get_registration_options() {
+        $options = array();
 
+        if ( $this->getForMe() == '1') {
+            $options[] = 'Je m\'inscris';
+        }
+
+        if ( $this->getForMyFamilyMembers() == '1') {
+            $options[] = 'J\'inscris les membres de ma famille';
+        }
+
+        if ( $this->getForOtherFamilyMembers() == '1') {
+            $options[] = 'J\'inscris les membres d’une autre famille';
+        }
+
+        return $options;
+    }
+
+    /**
+     * @return string
+     */
+    public function get_registration_options_html() {
+        ob_start();
+        ?>
+            <ul id="registration-options-list">
+                <?php foreach ($this->get_registration_options() as $option) : ?>
+                <li><?php echo $option; ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php
+        return ob_get_clean();
+    }
+
+    /**
+     * @return Person $person
+     */
+    public function get_person() {
+        return new Person($this->person_id);
+    }
 }
+

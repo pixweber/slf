@@ -1,10 +1,6 @@
 <?php
 require 'init.php';
 
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
-
 /*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
     header('Location: index.php');*/
 
@@ -39,10 +35,10 @@ if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
             $file_name = ReplaceSpecialCharacters($file_name);
             $file_name = preg_replace('/([^.a-z0-9]+)/i', '-', $file_name);
             $target_autor_file = '';
-            if(!move_uploaded_file($_FILES['droit_image']['tmp_name'], 'subs/' . $i . '_droit_image' . $file_ext))
+            if(!move_uploaded_file($_FILES['droit_image']['tmp_name'], 'uploads/' . $i . '_droit_image' . $file_ext))
                 $output = 'Une erreur inconnue est survenue durant l\'envoi du fichier d\'autorisation d\'utilisation de l\'image au serveur. Contactez l\'administrateur du site pour plus d\'informations.';
             else
-                $target_autor_file = 'subs/' . $i . '_droit_image' . $file_ext;
+                $target_autor_file = 'upload/' . $i . '_droit_image' . $file_ext;
         }
     }
 
@@ -61,10 +57,10 @@ if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
             $file_name = ReplaceSpecialCharacters($file_name);
             $file_name = preg_replace('/([^.a-z0-9]+)/i', '-', $file_name);
             $target_parent_file = '';
-            if(!move_uploaded_file($_FILES['autorisation_parent']['tmp_name'], 'subs/' . $i . '_autorisation_parent' . $file_ext))
+            if(!move_uploaded_file($_FILES['autorisation_parent']['tmp_name'], 'uploads/' . $i . '_autorisation_parent' . $file_ext))
                 $output = 'Une erreur inconnue est survenue durant l\'envoi du fichier d\'autorisation parentale au serveur. Contactez l\'administrateur du site pour plus d\'informations.';
             else
-                $target_parent_file = 'subs/' . $i . '_autorisation_parent' . $file_ext;
+                $target_parent_file = 'uploads/' . $i . '_autorisation_parent' . $file_ext;
         }
     }
 

@@ -1,8 +1,6 @@
 <?php
 use App\Utils;
 
-global $person_id;
-
 // Save person data to the database
 $registration_options = convert_json_input_value_to_array($_POST['registration_options']);
 $appointment_hour = get_current_available_hour();
@@ -17,7 +15,3 @@ $appointment_data = array(
 );
 
 $appointment_id = Utils::create_appointment($appointment_data);
-
-echo '<pre>';
-var_dump('Appointment saved', $appointment_id);
-echo '</pre>';

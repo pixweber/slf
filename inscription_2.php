@@ -2,10 +2,7 @@
 /*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200) {
     header('Location: index.php');
 }*/
-
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
+require 'init.php';
 
 $registration_options = null;
 $registration_options_json = '';
@@ -190,11 +187,14 @@ if ( isset($_POST['person']) ) {
                             <input type="checkbox" id="for_other_family_members" name="registration_options[]" value="for_other_family_members">
                             <label for="for_other_family_members">J’inscris les membres d’une autre famille.</label><br/><br/>
                             <script type="text/javascript">
-                                var checked_values = <?php echo $registration_options_json; ?>;
-                                checked_values.forEach(function(value, key){
-                                    console.log(value);
-                                    $('input:checkbox[value="'+ value +'"]').prop('checked', true);
-                                });
+                                var checked_values = '<?php echo $registration_options_json; ?>';
+
+                                if (checked_values) {
+                                    checked_values.forEach(function(value, key){
+                                        console.log(value);
+                                        $('input:checkbox[value="'+ value +'"]').prop('checked', true);
+                                    });
+                                }
                             </script>
                         </div>
 

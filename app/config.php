@@ -15,4 +15,6 @@ class Config {
         '15h00', '15h15', '15h40', '16h00',
         '16h25', '16h45', '17h00'
     );
+
+    const SITE_URL = 'http://slf.local';
 }

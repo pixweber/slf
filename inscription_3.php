@@ -27,6 +27,7 @@ if ( $_POST['next_step'] ) {
     $confirm_email = $_POST['confirm_email'];
 
     $registration_options = $_POST['registration_options'];
+
     $registration_options_dict = array(
          'for_me' => 'Je m\'inscris',
          'for_my_family_members' => 'J\'inscris les membres de ma famille',

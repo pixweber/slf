@@ -4,6 +4,11 @@ namespace App;
 use App\Core\Database;
 
 class Utils {
+
+    /**
+     * @param $person_data
+     * @return int
+     */
     public static function create_person($person_data) {
         $database = new Database();
         $query = "INSERT INTO persons(first_name, last_name, sex, birthdate, address, address_plus, postcode, city, email, phone, mobile, created_at, updated_at) 
@@ -29,6 +34,10 @@ class Utils {
         return $database->get_last_insert_id();
     }
 
+    /**
+     * @param $appointment_data
+     * @return int
+     */
     public static function create_appointment($appointment_data) {
         $database = new Database();
         $query = "INSERT INTO appointments(person_id, hour, participants, for_me, for_my_family_members, for_other_family_members) 
@@ -36,7 +45,7 @@ class Utils {
 
         $database->query($query);
 
-          $database->bind(':person_id', $appointment_data['person_id']);
+        $database->bind(':person_id', $appointment_data['person_id']);
         $database->bind(':hour', $appointment_data['hour']);
         $database->bind(':participants', $appointment_data['participants']);
         $database->bind(':for_me', $appointment_data['for_me']);
@@ -45,5 +54,34 @@ class Utils {
         $database->execute();
 
         return $database->get_last_insert_id();
+    }
+
+    /**
+     * @param string $sort_by
+     * @param string $order
+     * @return array
+     */
+    public static function get_all_appointments($sort_by = 'hour', $order = 'ASC') {
+        $database = new Database();
+        $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate FROM `appointments`
+                  INNER JOIN persons ON appointments.person_id = persons.person_id
+                  ORDER BY $sort_by $order";
+        $database->query($query);
+        $database->execute();
+        return $database->get_records();
+    }
+
+    /**
+     * @return array
+     */
+    public static function get_all_appointments_to_export() {
+        $database = new Database();
+        $query = "SELECT appointment_id, `hour`, participants, first_name, last_name, email, phone, mobile, birthdate
+                  FROM `appointments`
+                  INNER JOIN persons ON appointments.person_id = persons.person_id
+                  ORDER BY `hour` ASC";
+        $database->query($query);
+        $database->execute();
+        return $database->get_records();
     }
 }

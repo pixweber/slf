@@ -1,3 +1,6 @@
+<?php
+use App\Config;
+?>
 <div id="header">
     <center>
         <?php
@@ -23,7 +26,7 @@
         ?>
     </center>
     <!--<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" />-->
-    <link href="/style.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
     <script type="text/javascript" src="/assets/js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="/assets/js/jquery.validate.min.js"></script>
     <script type="text/javascript" src="/assets/js/messages_fr.min.js"></script>

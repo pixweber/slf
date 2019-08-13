@@ -1,33 +1,9 @@
 <?php
-    
 session_start();
 
-if (!isset($_SESSION['password']))
+if (!isset($_SESSION['password'])) {
     header('location: admin.php');
-
-if (isset($_GET['file']))
-{
-    $file = $_GET['file'];
-    $id = $_GET['id'];
-    if (file_exists('subs/' . $file))
-        unlink('subs/' . $_GET['file']);
-    if ($_GET['doc1'] != '')
-        unlink('subs/' . $_GET['doc1']);
-    if ($_GET['doc2'] != '')
-        unlink('subs/' . $_GET['doc2']);
-    if (file_exists('subs/pile.txt'))
-    {
-        file_put_contents('subs/pile.txt', str_replace($file, "", file_get_contents('subs/pile.txt')));
-        file_put_contents('subs/pile.txt', str_replace($file . "\r\n", "", file_get_contents('subs/pile.txt')));
-    }
-    if (file_exists('subs/noms.txt'))
-    {
-        file_put_contents('subs/noms.txt', str_replace($id, "", file_get_contents('subs/noms.txt')));
-        file_put_contents('subs/noms.txt', str_replace($id . "\r\n", "", file_get_contents('subs/noms.txt')));
-    }
 }
-
-header('location : admin_main_subscribers.php');
 
 ?>
 

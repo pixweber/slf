@@ -20,11 +20,11 @@ class Database {
         $db_user = Config::DB_USER;
         $db_password = Config::DB_PASSWORD;
 
-        $dns = "mysql:host=$db_host;dbname=$db_name";
+        $dns = "mysql:host=$db_host;dbname=$db_name;charset=utf8";
 
         $options = array(
             PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         );
 
         try {
