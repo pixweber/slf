@@ -128,3 +128,17 @@ jQuery(document).ready(function($){
     });
 });
 
+$(document).ready(function(){
+    // Confirm before deleting an appointment
+    $('.delete-appointment').on('click', function () {
+
+        // Get person fullname
+        var last_name = $(this).closest('tr').find('td:nth-child(1)').text();
+        var first_name = $(this).closest('tr').find('td:nth-child(2)').text();
+        var email = $(this).closest('tr').find('td:nth-child(3)').text();
+
+        return confirm(
+            `Vous êtes sur le point de supprimer ${last_name} ${first_name} (${email}) de la liste des inscrits \n\nAttention ! Cette action n'est pas irréversible`
+        );
+    });
+});

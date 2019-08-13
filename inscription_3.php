@@ -117,13 +117,13 @@ if ( $_POST['next_step'] ) {
                                     <label for="last_name">Nom :</label>
                                 </td>
                                 <td style="width: 40%;">
-                                    <input style="float: right; width: 100%;margin-right: 10px;" type="text" class="input_readonly" value="<?php echo $last_name; ?>" name="last_name" readonly>
+                                    <input style="float: right; width: 100%;margin-right: 10px;" type="text" name="last_name" class="input_readonly" value="<?php echo $last_name; ?>" readonly>
                                 </td>
                                 <td style="width: 13%;">
                                     <label for="first_name">Prénom :</label>
                                 </td>
                                 <td style="width: 37%;">
-                                    <input style="float: right; width: 100%;" type="text" name="first_name" class="input_readonly" value="<?php echo $last_name; ?>" name="first_name" readonly>
+                                    <input style="float: right; width: 100%;" type="text" name="first_name" class="input_readonly" value="<?php echo $first_name; ?>" readonly>
                                 </td>
                             </tr>
 

@@ -35,69 +35,90 @@ if (!isset($_SESSION['password'])) {
                 </table>
                 <h1>Espace administrateur - Liste des inscrits</h1>
                 <p>Ci-dessous se trouve la liste des inscrits aux activités. Vous pouvez effectuer une action groupée ou spécifique à un inscrit.</p>
-                <form method="get" action="admin_main_subscribers.php">
-                    <center>
-                        <label for="sort">Trier par </label>
-                            <select id="sort_by" name="sort" id="sort" style="width: 160px;">
-                                <option value="">Défaut</option>
-                                <option value="last_name">Nom</option>
-                                <option value="first_name">Prénom</option>
-                                <option value="birthdate">Date de naissance</option>
-                                <option value="hour">Heure de passage</option>
-                            </select>
-                        <label for="ascending"> et par ordre </label>
-                        <select id="sort_order" name="ascending" id="ascending" style="width: 120px;">
-                            <option value="asc">Croissant</option>
-                            <option value="desc">Décroissant</option>
-                        </select>
-                        <input type="submit" name="sort_list" value="Trier" />
-                    </center>
-                </form>
                 <script type="text/javascript">
-                    //Set selected for sort by select and sort order
-                    var sort_by = getParameterByName('sort', window.location.url);
-                    var order = getParameterByName('ascending', window.location.url);
-                    $('select#sort_by option[value="'+sort_by+'"]').attr("selected","selected");
-                    $('select#sort_order option[value="'+order+'"]').attr("selected","selected");
+                    $(document).ready(function(){
+                        //Set selected for sort by select and sort order
+                        var sort_by = getParameterByName('sort', window.location.url);
+                        var order = getParameterByName('ascending', window.location.url);
+                        $('select#sort_by option[value="'+sort_by+'"]').attr("selected","selected");
+                        $('select#sort_order option[value="'+order+'"]').attr("selected","selected");
+                    });
                 </script>
                 <br/>
-                <table id="appointments-table" style="width: 100%;border-collapse: collapse;">
-                    <tr style="background: #FF9C0F;color: white;font-size: 1.1em;">
-                        <th>Nom</th>
-                        <th>Prénom</th>
-                        <th style="width: 160px;">Date de naissance</th>
-                        <th style="width: 160px;">Heure de passage</th>
-                        <th style="width: 160px;">Actions</th>
+
+                <table style="width: 100%; margin-top: 15px;">
+                    <tbody><tr>
+                        <td width="60%">
+                            <form method="get" action="admin_main_subscribers.php">
+                                <center>
+                                    <label for="sort">Trier par </label>
+                                    <select id="sort_by" name="sort" id="sort" style="width: 160px;">
+                                        <option value="">Défaut</option>
+                                        <option value="last_name">Nom</option>
+                                        <option value="first_name">Prénom</option>
+                                        <option value="birthdate">Date de naissance</option>
+                                        <option value="hour">Heure</option>
+                                    </select>
+                                    <label for="ascending"> et par ordre </label>
+                                    <select id="sort_order" name="ascending" id="ascending" style="width: 120px;">
+                                        <option value="asc">Croissant</option>
+                                        <option value="desc">Décroissant</option>
+                                    </select>
+                                    <input type="submit" name="sort_list" value="Trier" />
+                                </center>
+                            </form>
+                        </td>
+                        <td width="40%">
+                            <div style="text-align: right; padding-right: 20px;"><a href="generate_excel.php" _target="_blank"><img src="/assets/img/icon_excel.jpg" style="width: 24px;margin: 0px 8px -7px 0;">Télécharger le fichier Excel</a></div>
+                        </td>
                     </tr>
-                    <?php
+                    </tbody>
+                </table>
+
+                <div class="padding-20">
+                    <table id="appointments-table" style="width: 100%;border-collapse: collapse;">
+                        <tr style="background: #FF9C0F;color: white;font-size: 1.1em;">
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Email</th>
+                            <th>Portable</th>
+                            <th style="width: 160px;">Date de naissance</th>
+                            <th style="">Heure</th>
+                            <th style="width: 350px;">Actions</th>
+                        </tr>
+                        <?php
                         $appointments = null;
-                        $sort_by = $_GET['sort'];
-                        $sort_order = $_GET['ascending'];
+                        $sort_by = isset($_GET['sort']) ? $_GET['sort'] : '';
+                        $sort_order = isset($_GET['ascending']) ? $_GET['ascending'] : '';
                         $appointments = Utils::get_all_appointments($sort_by, $sort_order);
 
                         if ($appointments) :
                             foreach ($appointments as $appointment) :
-                            ?>
+                                ?>
                                 <tr>
-                                    <td style="text-align: center;"><?php echo strtoupper($appointment['last_name']); ?></td>
-                                    <td style="text-align: center;"><?php echo $appointment['first_name']; ?></td>
+                                    <td style=""><?php echo strtoupper($appointment['last_name']); ?></td>
+                                    <td style=""><?php echo $appointment['first_name']; ?></td>
+                                    <td style=""><?php echo $appointment['email']; ?></td>
+                                    <td style="text-align: center;"><?php echo $appointment['mobile']; ?></td>
                                     <td style="text-align: center;"><?php echo DateTime::createFromFormat('Y-m-d', $appointment['birthdate'])->format('d/m/Y'); ?></td>
                                     <td style="text-align: center;"><?php echo $appointment['hour']; ?></td>
                                     <td style="text-align: center;">
                                         <a href="admin_main_subscribers_view.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Détails</a> -
-                                        <a href="admin_main_subscribers_delete.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Supprimer</a>
+                                        <a class="delete-appointment" href="admin_main_subscribers_delete.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Supprimer</a>
                                     </td>
                                 </tr>
                             <?php
                             endforeach;
                         else :
-                        ?>
+                            ?>
                             <div>Actuellement il n'y a pas de pré-inscription</div>
                         <?php
                         endif;
                         ?>
 
-                </table>
+                    </table>
+                </div>
+
                 <table style="width: 100%;">
                     <tbody><tr>
                         <td width="50%">
@@ -107,7 +128,8 @@ if (!isset($_SESSION['password'])) {
                             <p style="text-align: center;"><a href="generate_excel.php" _target="_blank"><img src="/assets/img/icon_excel.jpg" style="width: 24px;margin: 0px 8px -7px 0;">Télécharger le fichier Excel</a></p>
                         </td>
                     </tr>
-                    </tbody></table>
+                    </tbody>
+                </table>
             </div>
 
             <?php include("html/footer.html"); ?>

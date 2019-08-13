@@ -1,6 +1,10 @@
 <?php
 require 'init.php';
 
+echo '<pre>';
+var_dump($_POST);
+echo '</pre>';
+
 /*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
     header('Location: index.php');*/
 

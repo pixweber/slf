@@ -2,6 +2,8 @@
 namespace App;
 
 use App\Core\Database;
+use App\Models\Appointment;
+use App\Models\Person;
 
 class Utils {
 
@@ -63,10 +65,13 @@ class Utils {
      */
     public static function get_all_appointments($sort_by, $order) {
         $database = new Database();
-        $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate FROM `appointments`
+        $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate, email, mobile FROM `appointments`
                   INNER JOIN persons ON appointments.person_id = persons.person_id";
+
         if ($sort_by !== '' && $order !== '') {
             $query .= " ORDER BY $sort_by $order";
+        } else {
+            $query .= " ORDER BY hour ASC";
         }
 
         $database->query($query);
@@ -86,5 +91,40 @@ class Utils {
         $database->query($query);
         $database->execute();
         return $database->get_records();
+    }
+
+    /**
+     * @param $appointment_id
+     * @return object Person
+     */
+    public static function get_person_by_appointment_id($appointment_id) {
+        $appointment = new Appointment($appointment_id);
+        return $appointment->get_person();
+    }
+
+    /**
+     * @param $appointment_id
+     * @return int person_id
+     */
+    public static function get_person_id_by_appointment_id($appointment_id) {
+        $person = self::get_person_by_appointment_id($appointment_id);
+        return $person->getPersonId();
+    }
+
+    /**
+     * @param $appointment_id
+     */
+    public static function delete_appointment($appointment_id) {
+        $database = new Database();
+
+        // Deleting a person
+        $database->query("DELETE FROM appointments WHERE appointment_id = '$appointment_id'");
+        $database->execute();
+
+        // Deleting an appointment
+
+        $person_id = self::get_person_id_by_appointment_id($appointment_id);
+        $database->query("DELETE FROM persons WHERE person_id = '$person_id'");
+        $database->execute();
     }
 }

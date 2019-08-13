@@ -5,6 +5,12 @@ if (!isset($_SESSION['password'])) {
     header('location: admin.php');
 }
 
+require 'init.php';
+use App\Utils;
+
+if (!isset($_GET['appointment_id'])) {
+    header("Location: " . \App\Config::SITE_URL . "/admin_main_subscribers.php");
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -31,7 +37,18 @@ if (!isset($_SESSION['password'])) {
                     </tr>
                 </table>
                 <h1>Espace administrateur - Suppression</h1>
-                <p>L'utilisateur a été correctement supprimé.</p>
+
+                <?php
+                // Get person fullname
+                $person_id = Utils::get_person_id_by_appointment_id($_GET['appointment_id']);
+                $person = new \App\Models\Person($person_id);
+                $person_fullname = strtoupper($person->getFirstName()) . ' ' . $person->getLastName();
+
+                // Delete an appointment and the associated person
+                Utils::delete_appointment($_GET['appointment_id']);
+                ?>
+
+                <p class="text-center" style="color: red;">L'utilisateur <strong><?php echo $person_fullname; ?></strong> a été correctement supprimé.</p>
                 <p style="text-align: center;"><a href="admin_main_subscribers.php">Retourner à la liste</a></p>
             </div>
 

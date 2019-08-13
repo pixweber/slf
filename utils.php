@@ -55,25 +55,23 @@ function convert_json_input_value_to_array($string) {
  */
 function get_current_available_hour() {
     $database = new Database();
-    $database->query("SELECT `hour`, count(hour) as hours_count FROM appointments
-                            GROUP BY `hour`
-                            ORDER BY `hour` DESC");
-    $database->execute();
-    $result = $database->single();
 
-    $output = '09h30';
+    $output_hour = Config::HOURS[0];
 
-    if ( isset($result['hours_count']) && (int)$result['hours_count'] < 15 ) {
-        $output = $result['hour'];
+    foreach (Config::HOURS as $hour) {
+
+        $database->query("SELECT COUNT(*) as `count` FROM appointments WHERE `hour` LIKE '$hour'");
+        $database->execute();
+        $count = (int)$database->single()['count'];
+
+        if ( $count < 15) {
+            $output_hour = $hour;
+            break;
+        }
+
     }
 
-    if ( isset($result['hours_count']) && (int)$result['hours_count'] >= 15 ) {
-        $current_item_key = array_search($result['hour'], Config::HOURS);
-        $next_hour = Config::HOURS[$current_item_key + 1];
-        $output = $next_hour;
-    }
-
-    return $output;
+    return $output_hour;
 }
 
 /**

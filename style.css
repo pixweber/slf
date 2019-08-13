@@ -1,3 +1,11 @@
+select {
+    padding: 6px 10px;
+}
+
+.text-center {
+    text-align: center;
+}
+
 .no-padding {
     padding: 0!important
 }
@@ -22,6 +30,11 @@
 .padding-10 {
     padding: 10px!important
 }
+
+.padding-20 {
+    padding: 20px !important
+}
+
 .padding-gutter {
     padding: 13px!important
 }
@@ -94,4 +107,8 @@ input.valid {
 
 #appointments-table tbody tr:nth-child(even) {
     background-color: #FFF4E6;
+}
+
+#appointments-table tbody td {
+    padding: 8px 15px;
 }
