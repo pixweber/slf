@@ -61,11 +61,14 @@ class Utils {
      * @param string $order
      * @return array
      */
-    public static function get_all_appointments($sort_by = 'hour', $order = 'ASC') {
+    public static function get_all_appointments($sort_by, $order) {
         $database = new Database();
         $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate FROM `appointments`
-                  INNER JOIN persons ON appointments.person_id = persons.person_id
-                  ORDER BY $sort_by $order";
+                  INNER JOIN persons ON appointments.person_id = persons.person_id";
+        if ($sort_by !== '' && $order !== '') {
+            $query .= " ORDER BY $sort_by $order";
+        }
+
         $database->query($query);
         $database->execute();
         return $database->get_records();

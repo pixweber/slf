@@ -23,12 +23,10 @@ if (!isset($_SESSION['password'])) {
 
     <body>
 
-         <?php include("html/header.php"); ?>
+        <?php include("html/header.php"); ?>
 
         <div id="container">
-
             <div id="corps">
-
                 <table style="width: 100%;">
                     <tr>           
                         <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="resources/mairiedeparis.jpg" alt="Mairie de Paris" /></td>
@@ -48,7 +46,7 @@ if (!isset($_SESSION['password'])) {
                                 <option value="hour">Heure de passage</option>
                             </select>
                         <label for="ascending"> et par ordre </label>
-                        <select name="ascending" id="ascending" style="width: 120px;">
+                        <select id="sort_order" name="ascending" id="ascending" style="width: 120px;">
                             <option value="asc">Croissant</option>
                             <option value="desc">Décroissant</option>
                         </select>
@@ -56,20 +54,11 @@ if (!isset($_SESSION['password'])) {
                     </center>
                 </form>
                 <script type="text/javascript">
-                    $(document).ready(function(){
-                        /**
-                         * Set selected for sort by select and sort order
-                         */
-                        var sort_by = getParameterByName('sort', window.location.url);
-                        var order = getParameterByName('ascending', window.location.url);
-
-                        console.log(sort_by, order);
-
-                        $('select#sort_by option[value="'+sort+'"]').attr("selected","selected");
-                        /**
-                         * End Set selected for sort by select and sort order
-                         */
-                    });
+                    //Set selected for sort by select and sort order
+                    var sort_by = getParameterByName('sort', window.location.url);
+                    var order = getParameterByName('ascending', window.location.url);
+                    $('select#sort_by option[value="'+sort_by+'"]').attr("selected","selected");
+                    $('select#sort_order option[value="'+order+'"]').attr("selected","selected");
                 </script>
                 <br/>
                 <table id="appointments-table" style="width: 100%;border-collapse: collapse;">
@@ -82,11 +71,9 @@ if (!isset($_SESSION['password'])) {
                     </tr>
                     <?php
                         $appointments = null;
-                        if (!isset($_GET['sort']) && !isset($_GET['ascending'])) {
-                            $appointments = Utils::get_all_appointments();
-                        }  else {
-                            $appointments = Utils::get_all_appointments($_GET['sort'], $_GET['ascending']);
-                        }
+                        $sort_by = $_GET['sort'];
+                        $sort_order = $_GET['ascending'];
+                        $appointments = Utils::get_all_appointments($sort_by, $sort_order);
 
                         if ($appointments) :
                             foreach ($appointments as $appointment) :

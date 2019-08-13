@@ -16,5 +16,5 @@ class Config {
         '16h25', '16h45', '17h00'
     );
 
-    const SITE_URL = 'http://slf.local';
+    const SITE_URL = 'http://slf.fcciddb.com';
 }
