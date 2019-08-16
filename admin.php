@@ -9,15 +9,12 @@ $incorrect_pwd = FALSE;
 
 if (isset($_POST['login']) && isset($_POST['password']))
 {
-    if ($_POST['password'] == $correct_pwd)
-    {
+    if ($_POST['password'] == $correct_pwd) {
         session_start();
-
         $_SESSION['password'] = $correct_pwd;
         header('location: admin_main.php');
     }
-    else
-    {
+    else {
         $incorrect_pwd = TRUE;
     }
 }

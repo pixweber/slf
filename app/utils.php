@@ -122,9 +122,23 @@ class Utils {
         $database->execute();
 
         // Deleting an appointment
-
         $person_id = self::get_person_id_by_appointment_id($appointment_id);
         $database->query("DELETE FROM persons WHERE person_id = '$person_id'");
+        $database->execute();
+    }
+
+    /**
+     * Delete everything -> DANGEROUS
+     */
+    public static function delete_appointments() {
+        $database = new Database();
+
+        // Deleting persons
+        $database->query("TRUNCATE TABLE persons");
+        $database->execute();
+
+        // Deleting appointments
+        $database->query("TRUNCATE TABLE appointments");
         $database->execute();
     }
 }

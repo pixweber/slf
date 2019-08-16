@@ -3,15 +3,16 @@ session_start();
 
 include('utils.php');
 
-if (!isset($_SESSION['password']))
+if (!isset($_SESSION['password'])) {
     header('location: admin.php');
+}
+
 
 if ($_POST['update'])
 {
     $ext = array('.pdf', '.doc', '.docx');
 
-    if (isset($_FILES['inscription_sheet']) && $_FILES['inscription_sheet']['name'] != '')
-    {
+    if ( isset($_FILES['inscription_sheet']) && $_FILES['inscription_sheet']['name'] != '') {
         $file_size = filesize($_FILES['inscription_sheet']['tmp_name']);
         $file_ext = strrchr($_FILES['inscription_sheet']['name'], '.');
 
@@ -19,14 +20,14 @@ if ($_POST['update'])
              $output = 'Le format du fichier envoyé est incorrect (seuls les fichiers PDF sont acceptés).';
         else if (!isset($output))
         {
-            if(!move_uploaded_file($_FILES['inscription_sheet']['tmp_name'], 'files/inscription_sheet.pdf'))
+            if(!move_uploaded_file($_FILES['inscription_sheet']['tmp_name'], 'files/inscription_sheets.pdf'))
                 $output = 'Une erreur inconnue est survenue durant l\'envoi du fichier. Contactez l\'administrateur du site pour plus d\'informations.';
             else
                 $output = 'Les fichiers ont été correctement mis à jour.';
         }
     }
-    if (isset($_FILES['planning_adult_year']) && $_FILES['planning_adult_year']['name'] != '')
-    {
+
+    if (isset($_FILES['planning_adult_year']) && $_FILES['planning_adult_year']['name'] != '') {
         $file_size = filesize($_FILES['planning_adult_year']['tmp_name']);
         $file_ext = strrchr($_FILES['planning_adult_year']['name'], '.');
 
@@ -40,8 +41,8 @@ if ($_POST['update'])
                 $output = 'Les fichiers ont été correctement mis à jour.';
         }
     }
-    if (isset($_FILES['planning_child_internship']) && $_FILES['planning_child_internship']['name'] != '')
-    {
+
+    if (isset($_FILES['planning_child_internship']) && $_FILES['planning_child_internship']['name'] != '') {
         $file_size = filesize($_FILES['planning_child_internship']['tmp_name']);
         $file_ext = strrchr($_FILES['planning_child_internship']['name'], '.');
 
@@ -55,8 +56,8 @@ if ($_POST['update'])
                 $output = 'Les fichiers ont été correctement mis à jour.';
         }
     }
-    if (isset($_FILES['planning_adult_internship']) && $_FILES['planning_adult_internship']['name'] != '')
-    {
+
+    if (isset($_FILES['planning_adult_internship']) && $_FILES['planning_adult_internship']['name'] != '') {
         $file_size = filesize($_FILES['planning_adult_internship']['tmp_name']);
         $file_ext = strrchr($_FILES['planning_adult_internship']['name'], '.');
 
@@ -70,8 +71,8 @@ if ($_POST['update'])
                 $output = 'Les fichiers ont été correctement mis à jour.';
         }
     }
-    if (isset($_FILES['autor_parent']) && $_FILES['autor_parent']['name'] != '')
-    {
+
+    if (isset($_FILES['autor_parent']) && $_FILES['autor_parent']['name'] != '') {
         $file_size = filesize($_FILES['autor_parent']['tmp_name']);
         $file_ext = strrchr($_FILES['autor_parent']['name'], '.');
 
@@ -85,8 +86,8 @@ if ($_POST['update'])
                 $output = 'Les fichiers ont été correctement mis à jour.';
         }
     }
-    if (isset($_FILES['autor_image']) && $_FILES['autor_image']['name'] != '')
-    {
+
+    if (isset($_FILES['autor_image']) && $_FILES['autor_image']['name'] != '') {
         $file_size = filesize($_FILES['autor_image']['tmp_name']);
         $file_ext = strrchr($_FILES['autor_image']['name'], '.');
 
@@ -115,6 +116,7 @@ if ($_POST['update'])
                 $output = 'Les fichiers ont été correctement mis à jour.';
         }
     }
+
     if (isset($_FILES['tarifs']) && $_FILES['tarifs']['name'] != '')
     {
         $file_size = filesize($_FILES['tarifs']['tmp_name']);

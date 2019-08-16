@@ -1,7 +1,10 @@
 <?php
+require 'init.php';
 
-/*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
-    header('Location: index.php');  */
+if ( get_registrations_count() >= 200) {
+    header('Location: index.php');
+}
+
 
 $isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
 

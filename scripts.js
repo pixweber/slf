@@ -107,8 +107,20 @@ jQuery(document).ready(function($){
             },
             confirm_email : {
                 equalTo: '#email'
+            },
+            email: {
+                required: true,
+                email: true,
+                remote: {
+                    url: "check-email.php",
+                    type: "post",
+                    data: {
+                        email: function() {
+                            return $( "#email" ).val();
+                        }
+                    }
+                }
             }
-
         },
         messages: {
             field: {
@@ -141,4 +153,11 @@ $(document).ready(function(){
             `Vous êtes sur le point de supprimer ${last_name} ${first_name} (${email}) de la liste des inscrits \n\nAttention ! Cette action n'est pas irréversible`
         );
     });
+
+    $('#delete-appointments-link').on('click', function () {
+        return confirm(
+            `Vous êtes sur le point de supprimer tous les rendez-vous, inclus les informations de contact des inscrits \n\nAttention ! Cette action n'est pas irréversible`
+        );
+    });
+
 });

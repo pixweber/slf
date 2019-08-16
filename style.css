@@ -70,6 +70,14 @@ select {
     margin-bottom: 0 !important;
 }
 
+.margin-bottom-10 {
+    margin-bottom: 10px !important;
+}
+
+.margin-bottom-20 {
+    margin-bottom: 20px !important;
+}
+
 form label.error {
     font-size: 0.8rem;
     color: red;
@@ -112,3 +120,4 @@ input.valid {
 #appointments-table tbody td {
     padding: 8px 15px;
 }
+

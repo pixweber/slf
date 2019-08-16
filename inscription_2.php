@@ -187,7 +187,12 @@ if ( isset($_POST['person']) ) {
                             <input type="checkbox" id="for_other_family_members" name="registration_options[]" value="for_other_family_members">
                             <label for="for_other_family_members">J’inscris les membres d’une autre famille.</label><br/><br/>
                             <script type="text/javascript">
-                                var checked_values = '<?php echo $registration_options_json; ?>';
+
+                                var checked_values = '';
+
+                                <?php if ($registration_options_json) : ?>
+                                checked_values = <?php echo $registration_options_json; ?>;
+                                <?php endif; ?>
 
                                 if (checked_values) {
                                     checked_values.forEach(function(value, key){

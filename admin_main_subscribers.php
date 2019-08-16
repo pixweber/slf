@@ -111,7 +111,7 @@ if (!isset($_SESSION['password'])) {
                             endforeach;
                         else :
                             ?>
-                            <div>Actuellement il n'y a pas de pré-inscription</div>
+                            <div class="margin-bottom-20">Actuellement il n'y a pas de pré-inscription</div>
                         <?php
                         endif;
                         ?>
@@ -122,7 +122,7 @@ if (!isset($_SESSION['password'])) {
                 <table style="width: 100%;">
                     <tbody><tr>
                         <td width="50%">
-                            <p style="text-align: center;"><a href="#" onclick="sure();"><img src="/resources/db_remove.png" style="width: 24px;margin: 0px 8px -7px 0;">Supprimer tous les inscrits</a></p>
+                            <p style="text-align: center;"><a id="delete-appointments-link" href="/admin_main_subscribers_delete_all.php"><img src="/resources/db_remove.png" style="width: 24px;margin: 0px 8px -7px 0;">Supprimer tous les inscrits</a></p>
                         </td>
                         <td width="50%">
                             <p style="text-align: center;"><a href="generate_excel.php" _target="_blank"><img src="/assets/img/icon_excel.jpg" style="width: 24px;margin: 0px 8px -7px 0;">Télécharger le fichier Excel</a></p>
