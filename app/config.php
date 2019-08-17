@@ -17,4 +17,10 @@ class Config {
     );
 
     const SITE_URL = 'http://slf.fcciddb.com';
+    
+    const SMTP_SERVER = 'in-v3.mailjet.com';
+    const SMTP_USERNAME = '335ee06aaf6eebeaa4a6ed68d77a798f';
+    const SMTP_PASSWORD = 'a249685a91af3acdccaec5de89603e9d';
+    const SMTP_SECURE = 'tls';
+    const SMTP_PORT = '587';
 }

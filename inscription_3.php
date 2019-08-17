@@ -1,16 +1,13 @@
 <?php
 require 'init.php';
 
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
-
-/*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
-    header('Location: index.php'); */
+if ( get_registrations_count() >= 200) {
+    header('Location: index.php');
+}
 
 $isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
 
-if ( $_POST['next_step'] ) {
+if ( isset($_POST['next_step']) ) {
     $period = $_POST['period'];
     $person = $_POST['person'];
     $first_name = $_POST['first_name'];
@@ -43,10 +40,9 @@ if ( $_POST['next_step'] ) {
     $registration_options_html .= '</ul>';
 
     $nb_inscrit = $_POST['nb_inscrit'];
-
-
+} else {
+    header("Location: inscription_2.php");
 }
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -251,8 +247,7 @@ if ( $_POST['next_step'] ) {
                             return FALSE;
                     }
 
-                    if (!IsOver18($birthday))
-                    {
+                    if (!IsOver18($birthday)) {
                         echo '
                         <fieldset>
                             <legend>Autorisation parentale</legend>

@@ -1,6 +1,8 @@
 <?php
 use App\Utils;
 
+if (!isset($_POST['first_name'])) return;
+
 // Save person data to the database
 $person_data = array(
     'first_name' => $_POST['first_name'],

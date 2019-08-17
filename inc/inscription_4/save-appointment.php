@@ -1,6 +1,8 @@
 <?php
 use App\Utils;
 
+if (!isset($_POST['nb_inscrit'])) return;
+
 // Save person data to the database
 $registration_options = convert_json_input_value_to_array($_POST['registration_options']);
 $appointment_hour = get_current_available_hour();

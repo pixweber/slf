@@ -106,21 +106,17 @@ jQuery(document).ready(function($){
                 required: true
             },
             confirm_email : {
-                equalTo: '#email'
-            },
-            email: {
-                required: true,
-                email: true,
+                equalTo: '#email',
                 remote: {
-                    url: "check-email.php",
-                    type: "post",
+                    url: "/check-email.php",
+                    type: "POST",
                     data: {
                         email: function() {
-                            return $( "#email" ).val();
+                            return $( "#confirm_email" ).val();
                         }
                     }
                 }
-            }
+            },
         },
         messages: {
             field: {
@@ -134,7 +130,8 @@ jQuery(document).ready(function($){
                 required: 'Merci de choisir au moins une option'
             },
             confirm_email : {
-                equalTo: 'Merci de saisir la même adresse mail'
+                equalTo: 'Merci de saisir la même adresse mail',
+                remote: jQuery.validator.format("{0} est associée à une inscription en cours.")
             }
         }
     });

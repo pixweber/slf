@@ -80,17 +80,18 @@ $person = $appointment->get_person();
                                 </td>
                             </tr>
                             <?php
-                                if ($person->getAddressPlus() !== "")
-                                {
-                                    echo '<tr>
-                                        <td style="width: 200px;">
-                                            <label for="address_plus">Complément d\'adresse :</label>
-                                        </td>
-                                        <td>
-                                            <input style="width: 100%;" type="text" name="address_plus" class="input_readonly" value="' . $person->getAddressPlus() . '" readonly>
-                                        </td>
-                                    </tr>';
-                                }
+                            if ($person->getAddressPlus() !== "") :
+                            ?>
+                                <tr>
+                                <td style="width: 200px;">
+                                    <label for="address_plus">Complément d'adresse :</label>
+                                </td>
+                                <td>
+                                    <input style="width: 100%;" type="text" name="address_plus" class="input_readonly" value="<?php $person->getAddressPlus() ? $person->getAddressPlus() : ''; ?>" readonly>
+                                </td>
+                            </tr>
+                            <?php
+                            endif;
                             ?>
                             
                         </table>
@@ -114,7 +115,7 @@ $person = $appointment->get_person();
                                     <label for="phone">Téléphone (fixe) :</label>
                                 </td>
                                 <td>
-                                    <input style="width: 90%;" type="text" name="phone" class="input_readonly" value="<?php echo $person->getPhone(); ?>" readonly>
+                                    <input style="width: 90%;" type="text" name="phone" class="input_readonly" value="<?php echo $person->getPhone() ? $person->getPhone() : ''; ?>" readonly>
                                 </td>
                                 <td style="width: 90px;">
                                     <label for="mobile">Portable :</label>

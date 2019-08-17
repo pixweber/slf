@@ -1,24 +1,22 @@
 <?php
 require 'init.php';
 
-echo '<pre>';
-var_dump($_POST);
-echo '</pre>';
+if ( get_registrations_count() >= 200) {
+    header('Location: index.php');
+}
 
-/*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200)
-    header('Location: index.php');*/
-
-$isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
-
-/*if (strpos(file_get_contents('subs/noms.txt'), $match) !== FALSE) {
-    $output = 'Cette personne est déjà inscrite aux activités.';
-}*/
+// Affiche les étapes dans l'en-tête
+$isSubscribing = TRUE;
 
 // Write person and appointment information to the database
 require 'inc/inscription_4/save-person.php';
 require 'inc/inscription_4/save-appointment.php';
 
-if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
+global $person_id;
+$parental_permisson_filename = "$person_id" . "_" . strtolower($_POST['first_name']) . "_" . strtolower($_POST['last_name']);
+$parental_permisson_filename = str_replace(' ', '_', $parental_permisson_filename);
+
+if ( isset($_POST['next_step']) ) {
 
     // On commence par déterminer la position de l'utilisateur dans la pile
     $ext = array('.pdf', '.jpg', '.jpeg');
@@ -39,66 +37,51 @@ if ( $_POST['next_step'] /*&& !isset($output)*/ ) {
             $file_name = ReplaceSpecialCharacters($file_name);
             $file_name = preg_replace('/([^.a-z0-9]+)/i', '-', $file_name);
             $target_autor_file = '';
-            if(!move_uploaded_file($_FILES['droit_image']['tmp_name'], 'uploads/' . $i . '_droit_image' . $file_ext))
+            if(!move_uploaded_file($_FILES['droit_image']['tmp_name'], 'uploads/' . $parental_permisson_filename . '_droit_image' . $file_ext))
                 $output = 'Une erreur inconnue est survenue durant l\'envoi du fichier d\'autorisation d\'utilisation de l\'image au serveur. Contactez l\'administrateur du site pour plus d\'informations.';
             else
-                $target_autor_file = 'upload/' . $i . '_droit_image' . $file_ext;
+                $target_autor_file = 'upload/' . $parental_permisson_filename . '_droit_image' . $file_ext;
         }
     }
 
-    if (isset($_FILES['autorisation_parent']) && $_FILES['autorisation_parent']['name'] != '')
-    {
+    if (isset($_FILES['autorisation_parent']) && $_FILES['autorisation_parent']['name'] != '') {
         $file_name = basename($_FILES['autorisation_parent']['name']);
         $file_size = filesize($_FILES['autorisation_parent']['tmp_name']);
         $file_ext = strrchr($_FILES['autorisation_parent']['name'], '.');
 
-        if (!in_array($file_ext, $ext))
-             $output = 'Le format du fichier d\'autorisation parentale est incorrect (seuls les fichiers PDF et images JPEG sont acceptés).';
-        if ($file_size > $max_size)
-             $output = 'Le fichier d\'autorisation parentale est trop volumineux (taille limitée à 2000 Ko).';
-        if (!isset($output))
-        {
+        if (!in_array($file_ext, $ext)) {
+            $output = 'Le format du fichier d\'autorisation parentale est incorrect (seuls les fichiers PDF et images JPEG sont acceptés).';
+        }
+
+        if ($file_size > $max_size) {
+            $output = 'Le fichier d\'autorisation parentale est trop volumineux (taille limitée à 2000 Ko).';
+        }
+
+        if (!isset($output)) {
             $file_name = ReplaceSpecialCharacters($file_name);
             $file_name = preg_replace('/([^.a-z0-9]+)/i', '-', $file_name);
             $target_parent_file = '';
-            if(!move_uploaded_file($_FILES['autorisation_parent']['tmp_name'], 'uploads/' . $i . '_autorisation_parent' . $file_ext))
+
+            if(!move_uploaded_file($_FILES['autorisation_parent']['tmp_name'], 'uploads/' . $parental_permisson_filename . '_autorisation_parent' . $file_ext))
                 $output = 'Une erreur inconnue est survenue durant l\'envoi du fichier d\'autorisation parentale au serveur. Contactez l\'administrateur du site pour plus d\'informations.';
-            else
-                $target_parent_file = 'uploads/' . $i . '_autorisation_parent' . $file_ext;
+            else {
+                $target_parent_file = 'uploads/' . $parental_permisson_filename . '_autorisation_parent' . $file_ext;
+
+                // Write parental file to database
+                $database = new \App\Core\Database();
+                $database->query("UPDATE persons SET parental_permission_file = '$target_parent_file' WHERE `person_id` = '$person_id'");
+                $database->execute();
+            }
         }
     }
 
-    // Write to text file
-    if (!isset($output)) {
 
-        $data = array();
+    // Après l'ajout de l'utilisateur dans la base, on peut envoyer le mail
+    // Sending mail with PHPMailer
+    require 'inscription_4_send_email.php';
 
-
-        // Après l'ajout de l'utilisateur dans la base, on peut envoyer le mail
-        $headers = 'From:PoleSimonLeFranc' . "\r\n";
-        $headers .= 'X-Mailer:PHP/'. phpversion();
-        $object = "Inscription aux activités du Pôle Simon le Franc";
-        $content = "Merci pour votre inscription aux activités du Pôle Simon le Franc." . "/r/n";
-        $content .= "Pour chaque plage horaire vous serez entre 5 et 10 personnes invités à vous présenter à l’inscription. ".
-            "Nous disposerons de 3 postes d’inscriptions pour permettre de traiter le maximum d’inscription le premier jour ".
-            "L’équipe sera en possession d’une liste nominative des personnes attendues par plage horaire.\r\n".
-            "Attention ce nouveau dispositif ne garantit pas de passer immédiatement. ".
-            "Pour garantir le bon fonctionnement nous vous remercions de respecter scrupuleusement cette plage horaire. Si vous êtes en retard l’inscription ne sera plus possible. ".
-            "Toute l’équipe vous remercie par avance pour votre compréhension et votre indulgence.\r\n";
-        $content .= "Votre heure de passage est à " . $appointment_hour . "\r\n\n";
-        $content .= "Ceci est un message automatique, veuillez ne pas répondre.\r\n\n";
-        $content .= "Pôle Simon le Franc - Mairie de Paris";
-
-        mail($_POST['email'], $object, $content, $headers);
-
-        /*if (mail($data[12], $object, $content, $headers))
-            echo "Message envoyé";
-        else
-            echo "Erreur !";*/
-    }
-
-
-
+} else {
+    header('Location: inscription_2.php');
 }
 
 ?>

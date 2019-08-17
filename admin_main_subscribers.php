@@ -84,7 +84,8 @@ if (!isset($_SESSION['password'])) {
                             <th>Portable</th>
                             <th style="width: 160px;">Date de naissance</th>
                             <th style="">Heure</th>
-                            <th style="width: 350px;">Actions</th>
+                            <th style="" class="ap">AP</th>
+                            <th style="width: 350px;" class="actions">Actions</th>
                         </tr>
                         <?php
                         $appointments = null;
@@ -98,11 +99,18 @@ if (!isset($_SESSION['password'])) {
                                 <tr>
                                     <td style=""><?php echo strtoupper($appointment['last_name']); ?></td>
                                     <td style=""><?php echo $appointment['first_name']; ?></td>
-                                    <td style=""><?php echo $appointment['email']; ?></td>
+                                    <td style=""><a href="mailto:<?php echo $appointment['email']; ?>"><?php echo $appointment['email']; ?></a></td>
                                     <td style="text-align: center;"><?php echo $appointment['mobile']; ?></td>
                                     <td style="text-align: center;"><?php echo DateTime::createFromFormat('Y-m-d', $appointment['birthdate'])->format('d/m/Y'); ?></td>
                                     <td style="text-align: center;"><?php echo $appointment['hour']; ?></td>
-                                    <td style="text-align: center;">
+                                    <td style="text-align: center;" class="ap">
+                                        <?php if ($appointment['parental_permission_file']): ?>
+                                        <a href="/<?php echo $appointment['parental_permission_file']; ?>" target="_blank"><img src="/resources/file-outline.png" height="30"/></a>
+                                        <?php else : ?>
+
+                                        <?php endif; ?>
+                                    </td>
+                                    <td style="text-align: center;" class="actions">
                                         <a href="admin_main_subscribers_view.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Détails</a> -
                                         <a class="delete-appointment" href="admin_main_subscribers_delete.php?appointment_id=<?php echo $appointment['appointment_id']; ?>">Supprimer</a>
                                     </td>

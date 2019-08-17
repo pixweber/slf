@@ -1,7 +1,7 @@
 <?php
 require 'init.php';
 
-use App\Models\Person;
+/*use App\Models\Person;
 use App\Models\Appointment;
 use App\Utils;
 
@@ -11,7 +11,7 @@ echo '</pre>';
 
 echo '<pre>';
 var_dump(get_registrations_count());
-echo '</pre>';
+echo '</pre>';*/
 
 /*$person = new Person('1');
 

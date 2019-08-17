@@ -83,6 +83,7 @@ form label.error {
     color: red;
     font-weight: bold;
     display: block;
+    margin-top: 5px;
 }
 
 form legend {
@@ -119,5 +120,13 @@ input.valid {
 
 #appointments-table tbody td {
     padding: 8px 15px;
+}
+
+#appointments-table tr td.appointments-table, #appointments-table tr th.appointments-table {
+    width: 30px !important;
+}
+
+#appointments-table tr td.actions, #appointments-table tr th.actions {
+    width: 150px !important;
 }
 

@@ -1,8 +1,9 @@
 <?php
-/*if (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) >= 200) {
-    header('Location: index.php');
-}*/
 require 'init.php';
+
+if ( get_registrations_count() >= 200) {
+    header('Location: index.php');
+}
 
 $registration_options = null;
 $registration_options_json = '';
@@ -12,7 +13,8 @@ if (isset($_POST['registration_options'])) {
     $registration_options = json_decode($registration_options_json, true);
 }
 
-$isSubscribing = TRUE; // Affiche les étapes dans l'en-tête
+// Affiche les étapes dans l'en-tête
+$isSubscribing = TRUE;
 
 $period = '';
 $person = '';

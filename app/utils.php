@@ -65,7 +65,7 @@ class Utils {
      */
     public static function get_all_appointments($sort_by, $order) {
         $database = new Database();
-        $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate, email, mobile FROM `appointments`
+        $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate, email, mobile, parental_permission_file FROM `appointments`
                   INNER JOIN persons ON appointments.person_id = persons.person_id";
 
         if ($sort_by !== '' && $order !== '') {
@@ -84,7 +84,7 @@ class Utils {
      */
     public static function get_all_appointments_to_export() {
         $database = new Database();
-        $query = "SELECT appointment_id, `hour`, participants, first_name, last_name, email, phone, mobile, birthdate
+        $query = "SELECT appointment_id, `hour`, participants, first_name, last_name, email, phone, mobile, birthdate, parental_permission_file
                   FROM `appointments`
                   INNER JOIN persons ON appointments.person_id = persons.person_id
                   ORDER BY `hour` ASC";

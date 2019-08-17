@@ -101,6 +101,7 @@ function send_post_request($url, $data) {
     );
     $context  = stream_context_create($options);
     $result = file_get_contents($url, false, $context);
+
     if ($result === FALSE) {
         echo '<pre>';
         var_dump('Problems!');
