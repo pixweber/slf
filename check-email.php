@@ -19,7 +19,7 @@ $email = $_POST['confirm_email'];
 
 // Check if email exists
 $database = new Database();
-$database->query("SELECT COUNT(*) as records_count FROM persons WHERE email='$email'");
+$database->query("SELECT COUNT(*) as records_count FROM slf_persons WHERE email='$email'");
 $database->execute();
 $result = $database->get_records();
 

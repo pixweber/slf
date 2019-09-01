@@ -1,6 +1,9 @@
 <?php
-/*if (!file_exists('subs/pile.txt') || (file_exists('subs/pile.txt') && count(file('subs/pile.txt')) < 200))
-    header('Location: inscription_1.php');   */
+require 'init.php';
+
+if (get_registrations_count() < 200) {
+    header('Location: inscription_1.php');
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

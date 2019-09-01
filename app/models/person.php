@@ -28,7 +28,7 @@ class Person extends Database {
         // Do nothing if persion_id is not provided
         if (!$person_id) return;
 
-        $query = "SELECT * FROM persons WHERE person_id = :person_id";
+        $query = "SELECT * FROM slf_persons WHERE person_id = :person_id";
 
         $this->query($query);
         $this->bind(':person_id', $person_id);

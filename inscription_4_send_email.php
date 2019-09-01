@@ -36,9 +36,9 @@ try {
     $mail->WordWrap = 120;
 
     //Recipients
-    $mail->setFrom('contact@fcciddb.com', 'Pôle Simon le Franc');
+    $mail->setFrom(Config::SMTP_FROM, Config::SMTP_SENDER_NAME);
+    $mail->addReplyTo(Config::SMTP_REPLY_TO, Config::SMTP_SENDER_NAME);
     $mail->addAddress($person->getEmail(), $person->getLastName() . ' ' . $person->getFirstName());     // Add a recipient
-    $mail->addReplyTo('contact@fcciddb.com', 'Information');
     $mail->addBCC('lethehau@gmail.com', 'The Hau LE');
 
     // Content

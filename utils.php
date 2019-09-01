@@ -60,7 +60,7 @@ function get_current_available_hour() {
 
     foreach (Config::HOURS as $hour) {
 
-        $database->query("SELECT COUNT(*) as `count` FROM appointments WHERE `hour` LIKE '$hour'");
+        $database->query("SELECT COUNT(*) as `count` FROM slf_appointments WHERE `hour` LIKE '$hour'");
         $database->execute();
         $count = (int)$database->single()['count'];
 
@@ -79,7 +79,7 @@ function get_current_available_hour() {
  */
 function get_registrations_count() {
     $database = new Database();
-    $database->query("SELECT count(*) as count FROM appointments");
+    $database->query("SELECT count(*) as count FROM slf_appointments");
     $database->execute();
     $result = $database->single();
     if (!$result) return 0;

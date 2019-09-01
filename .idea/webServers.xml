@@ -2,12 +2,12 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="c24bce2d-12dd-4b88-a6f5-04dd6b34eb0f" name="fcciddb slf" url="http://fcciddb.com">
-        <fileTransfer host="fcciddb.com" port="22" accessType="SFTP">
+      <webServer id="640fdbbf-27c6-4df0-8c17-288f960f1f3d" name="ftp.cluster021.hosting.ovh.net" url="http://ftp.cluster021.hosting.ovh.net">
+        <fileTransfer host="ftp.cluster021.hosting.ovh.net" port="21">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
-          <option name="port" value="22" />
+          <option name="port" value="21" />
         </fileTransfer>
       </webServer>
     </option>

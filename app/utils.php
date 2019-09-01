@@ -13,7 +13,7 @@ class Utils {
      */
     public static function create_person($person_data) {
         $database = new Database();
-        $query = "INSERT INTO persons(first_name, last_name, sex, birthdate, address, address_plus, postcode, city, email, phone, mobile, created_at, updated_at) 
+        $query = "INSERT INTO slf_persons(first_name, last_name, sex, birthdate, address, address_plus, postcode, city, email, phone, mobile, created_at, updated_at) 
                     VALUES(:first_name,:last_name,:sex,:birthdate,:address,:address_plus,:postcode,:city,:email,:phone,:mobile,:created_at,:updated_at)";
 
         $database->query($query);
@@ -42,7 +42,7 @@ class Utils {
      */
     public static function create_appointment($appointment_data) {
         $database = new Database();
-        $query = "INSERT INTO appointments(person_id, hour, participants, for_me, for_my_family_members, for_other_family_members) 
+        $query = "INSERT INTO slf_appointments(person_id, hour, participants, for_me, for_my_family_members, for_other_family_members) 
                     VALUES(:person_id, :hour, :participants, :for_me, :for_my_family_members, :for_other_family_members)";
 
         $database->query($query);
@@ -65,8 +65,9 @@ class Utils {
      */
     public static function get_all_appointments($sort_by, $order) {
         $database = new Database();
-        $query = "SELECT appointment_id, persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate, email, mobile, parental_permission_file FROM `appointments`
-                  INNER JOIN persons ON appointments.person_id = persons.person_id";
+        $query = "SELECT appointment_id, slf_persons.person_id as person_id, `hour`, participants, first_name, last_name, birthdate, email, mobile, parental_permission_file 
+                  FROM `slf_appointments`
+                  INNER JOIN slf_persons ON slf_appointments.person_id = slf_persons.person_id";
 
         if ($sort_by !== '' && $order !== '') {
             $query .= " ORDER BY $sort_by $order";
@@ -85,8 +86,8 @@ class Utils {
     public static function get_all_appointments_to_export() {
         $database = new Database();
         $query = "SELECT appointment_id, `hour`, participants, first_name, last_name, email, phone, mobile, birthdate, parental_permission_file
-                  FROM `appointments`
-                  INNER JOIN persons ON appointments.person_id = persons.person_id
+                  FROM `slf_appointments`
+                  INNER JOIN slf_persons ON slf_appointments.person_id = slf_persons.person_id
                   ORDER BY `hour` ASC";
         $database->query($query);
         $database->execute();
@@ -116,14 +117,14 @@ class Utils {
      */
     public static function delete_appointment($appointment_id) {
         $database = new Database();
+        $person_id = self::get_person_id_by_appointment_id($appointment_id);
 
         // Deleting a person
-        $database->query("DELETE FROM appointments WHERE appointment_id = '$appointment_id'");
+        $database->query("DELETE FROM slf_appointments WHERE appointment_id = '$appointment_id'");
         $database->execute();
 
         // Deleting an appointment
-        $person_id = self::get_person_id_by_appointment_id($appointment_id);
-        $database->query("DELETE FROM persons WHERE person_id = '$person_id'");
+        $database->query("DELETE FROM slf_persons WHERE person_id = '$person_id'");
         $database->execute();
     }
 
@@ -134,11 +135,11 @@ class Utils {
         $database = new Database();
 
         // Deleting persons
-        $database->query("TRUNCATE TABLE persons");
+        $database->query("TRUNCATE TABLE slf_persons");
         $database->execute();
 
         // Deleting appointments
-        $database->query("TRUNCATE TABLE appointments");
+        $database->query("TRUNCATE TABLE slf_appointments");
         $database->execute();
     }
 }

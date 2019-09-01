@@ -1,7 +1,7 @@
 <?php
 require 'init.php';
 
-if ( get_registrations_count() >= 200) {
+if ( get_registrations_count() >= 180) {
     header('Location: index.php');
 }
 

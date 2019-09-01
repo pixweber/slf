@@ -19,7 +19,7 @@ class Appointment extends Database {
 
         parent::__construct();
 
-        $query = "SELECT * FROM appointments WHERE appointment_id = :appointment_id";
+        $query = "SELECT * FROM slf_appointments WHERE appointment_id = :appointment_id";
         $this->query($query);
         $this->bind(':appointment_id', $appointment_id);
         $result = $this->single();
