@@ -11,7 +11,7 @@ Pre-registration web need to be modernized so that developers can update and mai
 
 ## What's been done
 + Removed old data management in text files (txt)
-+ Implemented Object-Oriented standards
++ Implemented Object-Oriented standards for the main logic structure
 + Added PHP Composer to manage dependencies
 + Using MySQL to store data
 + Added jQuery Validation to validate form entered by users
