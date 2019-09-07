@@ -11,8 +11,8 @@ global $person_id;
 
 $person = new Person($person_id);
 
-$subject = "Inscription aux activités du Pôle Simon le Franc";
-$email_content = file_get_contents("mails/after-registration-template.txt");
+$subject = "Inscription aux activités du Pôle Simon le Franc - $appointment_hour le samedi 7 septembre 2019";
+$email_content = file_get_contents("mails/after-registration-template.html");
 $template_data = array(
     'appointment_hour' => $appointment_hour,
 );
@@ -39,10 +39,11 @@ try {
     $mail->setFrom(Config::SMTP_FROM, Config::SMTP_SENDER_NAME);
     $mail->addReplyTo(Config::SMTP_REPLY_TO, Config::SMTP_SENDER_NAME);
     $mail->addAddress($person->getEmail(), $person->getLastName() . ' ' . $person->getFirstName());     // Add a recipient
+    //$mail->addAddress('lethehau@gmail.com', $person->getLastName() . ' ' . $person->getFirstName());     // Add a recipient
     $mail->addBCC('lethehau@gmail.com', 'The Hau LE');
 
     // Content
-    $mail->isHTML(false);                                  // Set email format to HTML
+    $mail->isHTML(true);                                  // Set email format to HTML
     $mail->Subject = $subject;
     $mail->Body    = $email_content;
     //$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';

@@ -18,7 +18,7 @@ $header = array(
     'Email' => '@',
     'Portable' => '@',
     'Téléphone' => '@',
-    'Date de Naissance' => 'DD-MM-YYYY', //custom
+    'Date de Naissance' => 'dd-mm-yyyy', //custom
     'Autorisation parentale' => '@'
 );
 
@@ -32,8 +32,8 @@ foreach ($rows as $row) {
         $row['appointment_id'],
         $row['hour'],
         $row['participants'],
-        utf8_encode($row['first_name']),
-        utf8_encode($row['last_name']),
+        $row['first_name'],
+        $row['last_name'],
         $row['email'],
         $row['mobile'],
         $row['phone'],

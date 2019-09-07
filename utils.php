@@ -58,13 +58,16 @@ function get_current_available_hour() {
 
     $output_hour = Config::HOURS[0];
 
-    foreach (Config::HOURS as $hour) {
+    foreach ( Config::HOURS as $hour_item ) {
+
+        $hour = $hour_item['hour'];
+        $hour_slots = $hour_item['slots'];
 
         $database->query("SELECT COUNT(*) as `count` FROM slf_appointments WHERE `hour` LIKE '$hour'");
         $database->execute();
         $count = (int)$database->single()['count'];
 
-        if ( $count < 15) {
+        if ( $count < $hour_slots) {
             $output_hour = $hour;
             break;
         }
@@ -107,5 +110,31 @@ function send_post_request($url, $data) {
         var_dump('Problems!');
         echo '</pre>';
         /* Handle error */
+    }
+}
+
+/**
+ *
+ */
+function get_admin_password_hash() {
+    $database = new Database();
+    $database->query("SELECT * FROM `slf_options` WHERE `key` = 'admin_password'");
+    $database->execute();
+    $result = $database->single();
+    if (!$result) return;
+    return $result['value'];
+}
+
+/**
+ * @return bool|void
+ */
+function is_admin_logged_in() {
+
+    session_start();
+
+    if ( !isset($_SESSION['password']) ) return false;
+
+    if ( isset($_SESSION['password']) && $_SESSION['password'] === get_admin_password_hash() ) {
+        return true;
     }
 }

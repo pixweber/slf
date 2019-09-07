@@ -29,11 +29,11 @@ if (!isset($_SESSION['password'])) {
             <div id="corps">
                 <table style="width: 100%;">
                     <tr>           
-                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="resources/mairiedeparis.jpg" alt="Mairie de Paris" /></td>
+                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="assets/img/PARIS_LOGO-small.png" alt="Mairie de Paris" /></td>
                         <td style="width: 50%; margin-top: 15px;"><a href="admin_main.php" style="float: right;margin-right: 10px;">Retour au menu</a></td>
                     </tr>
                 </table>
-                <h1>Espace administrateur - Liste des inscrits</h1>
+                <h1>Espace administrateur - Liste des inscrits (<?php echo get_registrations_count(); ?>)</h1>
                 <p>Ci-dessous se trouve la liste des inscrits aux activités. Vous pouvez effectuer une action groupée ou spécifique à un inscrit.</p>
                 <script type="text/javascript">
                     $(document).ready(function(){

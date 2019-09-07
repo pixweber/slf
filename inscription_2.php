@@ -1,8 +1,14 @@
 <?php
 require 'init.php';
 
-if ( get_registrations_count() >= 180) {
+use App\Config;
+
+if ( get_registrations_count() >= Config::REGISTRATION_LIMIT)  {
     header('Location: index.php');
+} else {
+    if ( date('Y-m-d H:i') < '2019-09-04 19:00' && !is_admin_logged_in() ) {
+        header('Location: index.php');
+    }
 }
 
 $registration_options = null;
@@ -43,7 +49,7 @@ if ( isset($_POST['person']) ) {
 
                 <table style="width: 100%;">
                     <tr>
-                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="resources/mairiedeparis.jpg" alt="Mairie de Paris" /></td>
+                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="assets/img/PARIS_LOGO-small.png" alt="Mairie de Paris" /></td>
                         <td style="width: 50%; margin-top: 15px;"><p style="padding: 0;float: right;margin-right: 10px;">Étape 2/4</p></td>
                     </tr>
                 </table>

@@ -1,8 +1,14 @@
 <?php
 require 'init.php';
 
-if ( get_registrations_count() >= 180) {
+use App\Config;
+
+if ( get_registrations_count() >= Config::REGISTRATION_LIMIT)  {
     header('Location: index.php');
+} else {
+    if ( date('Y-m-d H:i') < '2019-09-04 19:00' && !is_admin_logged_in() ) {
+        header('Location: index.php');
+    }
 }
 
 // Affiche les étapes dans l'en-tête
@@ -105,7 +111,7 @@ if ( isset($_POST['next_step']) ) {
 
                 <table style="width: 100%;">
                     <tr>
-                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="resources/mairiedeparis.jpg" alt="Mairie de Paris" /></td>
+                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="assets/img/PARIS_LOGO-small.png" alt="Mairie de Paris" /></td>
                         <td style="width: 50%; margin-top: 15px;"><p style="padding: 0;float: right;margin-right: 10px;">Étape 4/4</p></td>
                     </tr>
                 </table>
@@ -121,16 +127,16 @@ if ( isset($_POST['next_step']) ) {
                         
                         echo '<p style="text-align: justify;"><b>Vous allez recevoir par mail votre confirmation et votre plage horaire pour vous présenter à l’inscription et limiter votre délai d’attente.</b>
                         <br/><br/>
-                        Pour chaque plage horaire vous serez entre 5 et 10 personnes invités à vous présenter à l’inscription.
+                        Pour chaque plage horaire vous serez entre 5 et 10 personnes invitées à vous présenter à l’inscription.
                         Nous disposerons de 3 postes d’inscriptions pour permettre de traiter le maximum d’inscription le premier jour
                         L’équipe sera en possession d’une liste nominative des personnes attendues par plage horaire. 
                         <br/><br/>
-                        Attention ce nouveau dispositif ne garantit pas de passer immédiatement. 
+                        Attention ce dispositif ne garantit pas de passer immédiatement. 
                         Pour garantir le bon fonctionnement nous vous remercions de respecter scrupuleusement cette plage horaire. Si vous êtes en retard l’inscription ne sera plus possible. 
                         Toute l’équipe vous remercie par avance pour votre compréhension et votre indulgence.
                         </p>';
                         echo '<br/>';
-                        echo '<center><a style="font-size: 1.3em;" href="inscription_4_1.php">Pour que votre inscription soit possible vous devez apporter un dossier complet le samedi 9 septembre 2017</a></center>';
+                        echo '<center><a style="font-size: 1.3em;" href="inscription_4_1.php">Pour que votre inscription soit possible vous devez apporter un dossier complet le samedi 7 septembre 2019</a></center>';
                         echo '<br/>';
                     }
                 ?>

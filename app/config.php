@@ -9,11 +9,74 @@ class Config {
     const DB_TYPE = 'mysqli';
     const DB_PORT = '3306';
     const HOURS = array(
-        '09h30', '10h00', '10h30', '11h00',
-        '11h20', '11h45', '12h10', '12h40',
-        '13h00', '14h00', '14h30', '14h45',
-        '15h00', '15h15', '15h40', '16h00',
-        '16h25', '16h45', '17h00'
+        array(
+            'hour' => '09h00',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '09h30',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '10h00',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '10h30',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '11h00',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '11h30',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '12h00',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '12h30',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '13h00',
+            'slots' => 7
+        ),
+        array(
+            'hour' => '14h00',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '14h30',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '15h00',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '15h30',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '16h00',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '16h30',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '17h00',
+            'slots' => 15
+        ),
+        array(
+            'hour' => '17h30',
+            'slots' => 32
+        )
     );
 
     const SITE_URL = 'https://dev.inscriptionpolesimonlefranc.org';
@@ -23,7 +86,9 @@ class Config {
     const SMTP_PASSWORD = '136515a81cfb2cf37957192e18258022';
     const SMTP_SECURE = 'tls';
     const SMTP_PORT = '587';
-    CONST SMTP_SENDER_NAME = 'Pôle Simon le Franc';
-    CONST SMTP_FROM = 'contact@inscriptionpolesimonlefranc.org';
-    CONST SMTP_REPLY_TO = 'contact@inscriptionpolesimonlefranc.org';
+    const SMTP_SENDER_NAME = 'Pôle Simon le Franc';
+    const SMTP_FROM = 'contact@inscriptionpolesimonlefranc.org';
+    const SMTP_REPLY_TO = 'contact@inscriptionpolesimonlefranc.org';
+    const REGISTRATION_LIMIT = 200;
+    const REGISTRATION_START = '2019-09-04 19:00';
 }

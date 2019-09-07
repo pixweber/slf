@@ -1,17 +1,19 @@
 <?php
+require 'init.php';
+
 session_start();
 
-if (isset($_SESSION['password']))
+if (isset($_SESSION['password'])) {
     header('location: admin_main.php');
+}
 
-$correct_pwd = "mjcslf2016";
 $incorrect_pwd = FALSE;
 
-if (isset($_POST['login']) && isset($_POST['password']))
-{
-    if ($_POST['password'] == $correct_pwd) {
+if (isset($_POST['login']) && isset($_POST['password'])) {
+
+    if ( md5($_POST['password']) === get_admin_password_hash() ) {
         session_start();
-        $_SESSION['password'] = $correct_pwd;
+        $_SESSION['password'] = get_admin_password_hash();
         header('location: admin_main.php');
     }
     else {

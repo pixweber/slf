@@ -1,8 +1,14 @@
 <?php
 require 'init.php';
 
-if ( get_registrations_count() >= 200) {
+use App\Config;
+
+if ( get_registrations_count() >= Config::REGISTRATION_LIMIT)  {
     header('Location: index.php');
+} else {
+    if ( date('Y-m-d H:i') < '2019-09-04 19:00' && !is_admin_logged_in() ) {
+        header('Location: index.php');
+    }
 }
 
 // Affiche les étapes dans l'en-tête
@@ -36,14 +42,15 @@ $isSubscribing = TRUE;
 
                 <table style="width: 100%;">
                     <tr>
-                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="resources/mairiedeparis.jpg" alt="Mairie de Paris" /></td>
+                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="assets/img/PARIS_LOGO-small.png" alt="Mairie de Paris" /></td>
                         <td style="width: 50%; margin-top: 15px;"><p style="padding: 0;float: right;margin-right: 10px;">Étape 1/4</p></td>
                     </tr>
                 </table>
                 <h1>Bienvenue</h1>
-                <p style="text-align: justify;">Bienvenue sur le site internet du Centre Paris Anim’ Pôle Simon Le Franc destiné à générer une file d’attente pour le premier jour des inscriptions.                     <font size="5">Le samedi 9 septembre</font> <br/>
+                <p style="text-align: justify;">Bienvenue sur le site internet du Centre Paris Anim’ Pôle Simon Le Franc destiné à générer une file d’attente pour le premier jour des inscriptions.
+                    <font size="5">Le Samedi 7 Septembre 2019</font> <br/>
                     <br/>
-                Le principe est de vous attribuer un horaire de rendez-vous auquel vous présenter le premier jour des inscriptions en fonction de votre ordre de connexion. Seules les 230 premières personnes connectés se verront attribuer un horaire de passage pour le premier jour des inscriptions. Ensuite les inscriptions se poursuivent aux horaires habituels d’ouverture du Pôle Simon Le Franc.
+                Le principe est de vous attribuer un horaire de rendez-vous auquel vous présenter le premier jour des inscriptions en fonction de votre ordre de connexion. Seules les 200 premières personnes connectés se verront attribuer un horaire de passage pour le premier jour des inscriptions. Ensuite les inscriptions se poursuivent aux horaires habituels d’ouverture du Pôle Simon Le Franc.
                     <br/>
                 </p>
                 

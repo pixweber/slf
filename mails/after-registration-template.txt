@@ -1,13 +1,15 @@
 Bonjour,
 
-Merci pour votre inscription aux activités du Pôle Simon le Franc.
+Vous venez de faire le premier pas pour votre inscription aux activités du Centre Paris Anim' Pôle Simon le Franc pour la saison 2019-2020.
 
-Pour chaque plage horaire vous serez entre 5 et 10 personnes invités à vous présenter à l’inscription. Nous disposerons de 3 postes d’inscriptions pour permettre de traiter le maximum d’inscription le premier jour
+Pour chaque plage horaire nous accueillerons entre 5 et 10 personnes pour procéder à leur inscription. Nous disposerons de 3 postes informatiques pour permettre de traiter le maximum de dossiers le premier jour.
 
-L’équipe sera en possession d’une liste nominative des personnes attendues par plage horaire. Attention ce nouveau dispositif ne garantit pas de passer immédiatement.
+L’équipe sera en possession d’une liste nominative des personnes attendues par plage horaire. Attention ce dispositif ne garantit pas de passer immédiatement mais réduira considérablement le délai d'attente.
 
-Pour garantir le bon fonctionnement nous vous remercions de respecter scrupuleusement cette plage horaire. Si vous êtes en retard l’inscription ne sera plus possible. Toute l’équipe vous remercie par avance pour votre compréhension et votre indulgence. Votre heure de passage est à [appointment_hour]
+Pour garantir le bon fonctionnement nous vous remercions de respecter scrupuleusement cette plage horaire. Si vous êtes en retard l’inscription ne sera plus possible.
+
+Toute l’équipe vous remercie par avance pour votre compréhension et votre indulgence. Votre heure de passage est fixée à [appointment_hour] le samedi 7 septembre 2019.
 
 Ceci est un message automatique, veuillez ne pas répondre.
 
-Pôle Simon le Franc - Mairie de Paris
+CPA Pôle Simon le Franc - Mairie de Paris

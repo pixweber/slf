@@ -4,8 +4,16 @@ require '../init.php';
 
 use App\Utils;
 use Faker\Factory;
+use App\Config;
 
-for ($i = 1; $i <= 10; $i++) {
+for ($i = 1; $i <= 5; $i++) {
+
+    // Check if registration limit reached
+    if ( get_registrations_count() >= 200 ) {
+        echo '<p>Registration limit reached</p>';
+        break;
+    }
+
     $faker = Factory::create('fr_FR');
 
     $registration_options = array(
@@ -34,7 +42,7 @@ for ($i = 1; $i <= 10; $i++) {
         'next_step' => 'Valider'
     );
 
-    send_post_request('http://slf.local/inscription_4.php', $test_data);
+    send_post_request(Config::SITE_URL . '/inscription_4.php', $test_data);
 }
 
 

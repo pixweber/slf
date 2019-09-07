@@ -1,10 +1,9 @@
 <?php
-    
 session_start();
 
-if (!isset($_SESSION['password']))
+if (!isset($_SESSION['password'])) {
     header('location: admin.php');
-
+}
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -26,7 +25,7 @@ if (!isset($_SESSION['password']))
 
                 <table style="width: 100%;">
                     <tr>
-                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="resources/mairiedeparis.jpg" alt="Mairie de Paris" /></td>
+                        <td style="width: 50%;"><img style="width: 200px; margin-top: 10px; margin-left: -3px; margin-bottom: 10px;" src="assets/img/PARIS_LOGO-small.png" alt="Mairie de Paris" /></td>
                         <td style="width: 50%; margin-top: 15px;"><a href="admin_deconnect.php" style="float: right;margin-right: 10px;">Se déconnecter</a></td>
                     </tr>
                 </table>
