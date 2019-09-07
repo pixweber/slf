@@ -2,10 +2,10 @@
 namespace App;
 
 class Config {
-    const DB_HOST = 'dallardttfbenjam.mysql.db';
-    const DB_NAME = 'dallardttfbenjam';
-    const DB_USER = 'dallardttfbenjam';
-    const DB_PASSWORD = 'Ninilidu94';
+    const DB_HOST = 'localhost';
+    const DB_NAME = 'dbname';
+    const DB_USER = 'dbuser';
+    const DB_PASSWORD = 'dbpassword';
     const DB_TYPE = 'mysqli';
     const DB_PORT = '3306';
     const HOURS = array(
@@ -81,9 +81,9 @@ class Config {
 
     const SITE_URL = 'https://dev.inscriptionpolesimonlefranc.org';
     
-    const SMTP_SERVER = 'in-v3.mailjet.com';
-    const SMTP_USERNAME = '012ee40091916628ec08ddfda1b51481';
-    const SMTP_PASSWORD = '136515a81cfb2cf37957192e18258022';
+    const SMTP_SERVER = 'smtp_server';
+    const SMTP_USERNAME = 'smtp_username';
+    const SMTP_PASSWORD = 'smtp_password';
     const SMTP_SECURE = 'tls';
     const SMTP_PORT = '587';
     const SMTP_SENDER_NAME = 'Pôle Simon le Franc';

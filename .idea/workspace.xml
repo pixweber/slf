@@ -2,27 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f76acc5-a448-4683-817b-08b62bec3725" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/mails/after-registration-template.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webServers.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webServers.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin_main.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin_main.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin_main_subscribers.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin_main_subscribers.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin_main_subscribers_view.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin_main_subscribers_view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_excel.php" beforeDir="false" afterPath="$PROJECT_DIR$/generate_excel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/html/meta.html" beforeDir="false" afterPath="$PROJECT_DIR$/html/meta.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inscription_1.php" beforeDir="false" afterPath="$PROJECT_DIR$/inscription_1.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inscription_2.php" beforeDir="false" afterPath="$PROJECT_DIR$/inscription_2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inscription_3.php" beforeDir="false" afterPath="$PROJECT_DIR$/inscription_3.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inscription_4.php" beforeDir="false" afterPath="$PROJECT_DIR$/inscription_4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inscription_4_1.php" beforeDir="false" afterPath="$PROJECT_DIR$/inscription_4_1.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inscription_4_send_email.php" beforeDir="false" afterPath="$PROJECT_DIR$/inscription_4_send_email.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mails/after-registration-template.txt" beforeDir="false" afterPath="$PROJECT_DIR$/mails/after-registration-template.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/create-registration.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/create-registration.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils.php" beforeDir="false" afterPath="$PROJECT_DIR$/utils.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/App/Config.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,14 +27,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/generate_excel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+            <state relative-caret-position="357">
+              <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
               <folding>
                 <element signature="e#119#144#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/App/Config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="427">
+              <caret line="93" column="1" lean-forward="true" selection-start-line="93" selection-start-column="1" selection-end-line="93" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -231,7 +220,6 @@
         <option value="$PROJECT_DIR$/admin_main_subscribers.php" />
         <option value="$PROJECT_DIR$/admin_main.php" />
         <option value="$PROJECT_DIR$/admin.php" />
-        <option value="$PROJECT_DIR$/App/Config.php" />
         <option value="$PROJECT_DIR$/inscription_1.php" />
         <option value="$PROJECT_DIR$/utils.php" />
         <option value="$PROJECT_DIR$/inscription_2.php" />
@@ -241,6 +229,7 @@
         <option value="$PROJECT_DIR$/html/meta.html" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/generate_excel.php" />
+        <option value="$PROJECT_DIR$/App/Config.php" />
       </list>
     </option>
   </component>
@@ -265,7 +254,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -281,34 +269,6 @@
             <path>
               <item name="inscriptionpolesimonlefranc.org" type="b2602c69:ProjectViewProjectNode" />
               <item name="inscriptionpolesimonlefranc.org" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="inscriptionpolesimonlefranc.org" type="b2602c69:ProjectViewProjectNode" />
-              <item name="inscriptionpolesimonlefranc.org" type="462c0819:PsiDirectoryNode" />
-              <item name="App" type="462c0819:PsiDirectoryNode" />
-              <item name="Models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="inscriptionpolesimonlefranc.org" type="b2602c69:ProjectViewProjectNode" />
-              <item name="inscriptionpolesimonlefranc.org" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="inscriptionpolesimonlefranc.org" type="b2602c69:ProjectViewProjectNode" />
-              <item name="inscriptionpolesimonlefranc.org" type="462c0819:PsiDirectoryNode" />
-              <item name="assets" type="462c0819:PsiDirectoryNode" />
-              <item name="img" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="inscriptionpolesimonlefranc.org" type="b2602c69:ProjectViewProjectNode" />
-              <item name="inscriptionpolesimonlefranc.org" type="462c0819:PsiDirectoryNode" />
-              <item name="html" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="inscriptionpolesimonlefranc.org" type="b2602c69:ProjectViewProjectNode" />
-              <item name="inscriptionpolesimonlefranc.org" type="462c0819:PsiDirectoryNode" />
               <item name="mails" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -320,6 +280,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -386,11 +347,12 @@
       <workItem from="1567609905308" duration="2924000" />
       <workItem from="1567673813625" duration="2273000" />
       <workItem from="1567765127958" duration="5000" />
+      <workItem from="1567871429627" duration="181000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="139469000" />
+    <option name="totallyTimeSpent" value="139650000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -403,8 +365,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24466951" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24733475" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -417,7 +380,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.32827735" />
-      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49946696" weight="0.37486458" />
+      <window_info anchor="bottom" id="Terminal" order="10" sideWeight="0.49946696" visible="true" weight="0.37486458" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50053304" side_tool="true" weight="0.30010834" />
       <window_info anchor="bottom" id="File Transfer" order="12" visible="true" weight="0.2654388" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -718,13 +681,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/App/Config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="517">
-          <caret line="91" column="10" selection-start-line="91" selection-start-column="10" selection-end-line="91" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/inscription_4_1.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="884">
@@ -793,11 +749,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/generate_excel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+        <state relative-caret-position="357">
+          <caret line="21" column="35" lean-forward="true" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
           <folding>
             <element signature="e#119#144#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/App/Config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="427">
+          <caret line="93" column="1" lean-forward="true" selection-start-line="93" selection-start-column="1" selection-end-line="93" selection-end-column="1" />
         </state>
       </provider>
     </entry>
