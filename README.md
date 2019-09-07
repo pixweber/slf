@@ -1,6 +1,22 @@
 # SLF
-JDC project for the Pôle Simon le Franc Paris 
+Refonte du site de pré-inscription Pôle Simon Le Franc
 
-## check our website 
-http://juniordataconsulting.com/
+Center Pôle Simon Le Franc The Simon Pole The Franc develops a number of activities to help people
+
+## Requirements
+Pre-registration web need to be modernized to be updated and maintained with ease.
+
+## Problems
++ Unlikely to maintain current source code due to old procedural programming style. 
+
+## What's been done
++ Removed old data management in text files (txt)
++ Implemented Object-Oriented standards
++ Added PHP Composer to manage dependencies
++ Using MySQL to store data
++ Added jQuery Validation to validate form entered by users
+ 
+
+## Check our website 
+https://www.inscriptionpolesimonlefranc.org/
 
